@@ -12,27 +12,20 @@ public class Recipe {
     private String rName;
     private int servings;
     private double weight;
-    private int temperature;
-    private String cookTime;
-    private String directions;
+    private String notes;
 
     public Recipe() {
         rName = "";
         servings = 0;
         weight = 0;
-        temperature = 0;
-        cookTime = "";
-        directions = "";
+        notes = "";
     }
 
-    public Recipe(String rName, int servings, double weight, 
-            int temperature, String cookTime, String directions) {
+    public Recipe(String rName, int servings, double weight, String notes) {
         this.rName = rName;
         this.servings = servings;
         this.weight = weight;
-        this.temperature = temperature;
-        this.cookTime = cookTime;
-        this.directions = directions;
+        this.notes = notes;
     }
 
     public String getrName() {
@@ -59,33 +52,17 @@ public class Recipe {
         this.weight = weight;
     }
 
-    public int getTemperature() {
-        return temperature;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setTemperature(int temperature) {
-        this.temperature = temperature;
-    }
-
-    public String getCookTime() {
-        return cookTime;
-    }
-
-    public void setCookTime(String cookTime) {
-        this.cookTime = cookTime;
-    }
-
-    public String getDirections() {
-        return directions;
-    }
-
-    public void setDirections(String directions) {
-        this.directions = directions;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }   
 
     @Override
     public String toString() {
-        return "Recipe{" + "rName=" + rName + ", servings=" + servings + ", weight=" + weight + ", temperature=" + temperature + ", cookTime=" + cookTime + ", directions=" + directions + '}';
+        return "Recipe{" + "rName=" + rName + ", servings=" + servings + ", weight=" + weight + ", notes=" + notes + '}';
     }
     
     

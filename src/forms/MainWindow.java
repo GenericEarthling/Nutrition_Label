@@ -114,7 +114,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Light", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nutrition Label Creator");
 
@@ -425,7 +425,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(jBtnGetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnResetAll, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -685,8 +685,6 @@ public class MainWindow extends javax.swing.JFrame {
         String nameMessage = "A name is required for this recipe: ";
         int servings = 0;
         double weight = 0;
-        String cookTime = "";
-        int cookTemp = 0;
         String notes = "";
         String rName = jtfRecipeName.getText();
         // get user input recipe values
@@ -700,7 +698,7 @@ public class MainWindow extends javax.swing.JFrame {
             System.err.println("Input Error at Get-Label Action Performed button: " + e);
         }
      
-        recipe = new Recipe(rName, servings, weight, cookTemp, cookTime, notes);
+        recipe = new Recipe(rName, servings, weight, notes);
         // open an instance of the Print Label Window
         NutritionLabel nl = new NutritionLabel();
         nl.setVisible(true);
