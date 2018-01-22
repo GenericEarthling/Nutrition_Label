@@ -136,10 +136,8 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jScrollPane2" min="-2" pref="882" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jBtnAddIngredient" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jBtnEditIngred" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButtonDeleteIngredient" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jTextField1" min="-2" pref="252" max="-2" attributes="0"/>
@@ -158,7 +156,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jBtnEditIngred" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonDeleteIngredient" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jBtnAddIngredient" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jBtnAddIngredient1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField1" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
@@ -260,21 +257,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDeleteIngredientActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jBtnAddIngredient">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="20" style="0"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="34" green="28" red="9" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Add Ingredient"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jBtnAddIngredientMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnAddIngredientActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="jBtnAddIngredient1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -345,7 +327,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jtaDirections">
+            <Component class="javax.swing.JTextArea" name="jtaNotes">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="d4" green="f7" red="f0" type="rgb"/>
@@ -374,7 +356,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Enter Cooking Directions"/>
+            <Property name="text" type="java.lang.String" value="Enter Notes:"/>
           </Properties>
         </Component>
       </SubComponents>

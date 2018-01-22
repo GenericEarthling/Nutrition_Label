@@ -62,12 +62,11 @@ public class MainWindow extends javax.swing.JFrame {
         jTable = new javax.swing.JTable();
         jBtnEditIngred = new javax.swing.JButton();
         jButtonDeleteIngredient = new javax.swing.JButton();
-        jBtnAddIngredient = new javax.swing.JButton();
         jBtnAddIngredient1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jPanelDirections = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtaDirections = new javax.swing.JTextArea();
+        jtaNotes = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jPanelRecipe = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -206,20 +205,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jBtnAddIngredient.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jBtnAddIngredient.setForeground(new java.awt.Color(9, 40, 52));
-        jBtnAddIngredient.setText("Add Ingredient");
-        jBtnAddIngredient.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jBtnAddIngredientMouseClicked(evt);
-            }
-        });
-        jBtnAddIngredient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnAddIngredientActionPerformed(evt);
-            }
-        });
-
         jBtnAddIngredient1.setBackground(new java.awt.Color(102, 176, 50));
         jBtnAddIngredient1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jBtnAddIngredient1.setForeground(new java.awt.Color(9, 40, 52));
@@ -247,10 +232,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(jPanelIngredientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelIngredientsLayout.createSequentialGroup()
-                        .addComponent(jBtnAddIngredient)
-                        .addGap(18, 18, 18)
                         .addComponent(jBtnEditIngred)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonDeleteIngredient)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,7 +248,6 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(jPanelIngredientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnEditIngred)
                     .addComponent(jButtonDeleteIngredient)
-                    .addComponent(jBtnAddIngredient)
                     .addComponent(jBtnAddIngredient1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -275,18 +257,18 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanelDirections.setBackground(new java.awt.Color(51, 51, 51));
 
-        jtaDirections.setBackground(new java.awt.Color(240, 247, 212));
-        jtaDirections.setColumns(20);
-        jtaDirections.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        jtaDirections.setForeground(new java.awt.Color(52, 123, 152));
-        jtaDirections.setLineWrap(true);
-        jtaDirections.setRows(5);
-        jScrollPane1.setViewportView(jtaDirections);
+        jtaNotes.setBackground(new java.awt.Color(240, 247, 212));
+        jtaNotes.setColumns(20);
+        jtaNotes.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jtaNotes.setForeground(new java.awt.Color(52, 123, 152));
+        jtaNotes.setLineWrap(true);
+        jtaNotes.setRows(5);
+        jScrollPane1.setViewportView(jtaNotes);
 
         jLabel2.setBackground(new java.awt.Color(240, 247, 212));
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Enter Cooking Directions");
+        jLabel2.setText("Enter Notes:");
 
         javax.swing.GroupLayout jPanelDirectionsLayout = new javax.swing.GroupLayout(jPanelDirections);
         jPanelDirections.setLayout(jPanelDirectionsLayout);
@@ -674,12 +656,8 @@ public class MainWindow extends javax.swing.JFrame {
 // change this to "action performed"        
         // see video link at the top of page for this (last 2 minutes of video)
     }//GEN-LAST:event_jButtonDeleteIngredientMouseClicked
-    // DELETE THIS MOUSE CLICK EVENT (Used jBtnAddIngredientActionPerformed instead
-    private void jBtnAddIngredientMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnAddIngredientMouseClicked
-      // dont think i need this anymore      
-      System.out.println("Btn: add ingredient :::: mouse clicked  ::::::");
-    }//GEN-LAST:event_jBtnAddIngredientMouseClicked
-    // get the value in the table (for each nutrient) and save to selectedIngredient() object
+
+   // get the value in the table (for each nutrient) and save to selectedIngredient() object
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
         String amount = String.valueOf(table.getValueAt(jTable.getSelectedRow(), 0));   
         selectedMeasurement = String.valueOf(table.getValueAt(jTable.getSelectedRow(), 1));            
@@ -709,21 +687,20 @@ public class MainWindow extends javax.swing.JFrame {
         double weight = 0;
         String cookTime = "";
         int cookTemp = 0;
-        String directions = "";
+        String notes = "";
         String rName = jtfRecipeName.getText();
         // get user input recipe values
         try {             
             rName = jtfRecipeName.getText();
             servings = intTest(jtfServings.getText());
             weight = doubleTest(jtfWeight.getText());
-            cookTime = jtfCookTime.getText();
-            cookTemp = intTest(jtfCookTemp.getText());
-            directions = jtaDirections.getText();                        
+
+            notes = jtaNotes.getText();                        
         } catch (NumberFormatException e) {
             System.err.println("Input Error at Get-Label Action Performed button: " + e);
         }
      
-        recipe = new Recipe(rName, servings, weight, cookTemp, cookTime, directions);
+        recipe = new Recipe(rName, servings, weight, cookTemp, cookTime, notes);
         // open an instance of the Print Label Window
         NutritionLabel nl = new NutritionLabel();
         nl.setVisible(true);
@@ -732,10 +709,8 @@ public class MainWindow extends javax.swing.JFrame {
         nl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         System.out.println("Btn: get Label: " + recipe.toString());
     }//GEN-LAST:event_jBtnGetLabelActionPerformed
-    // DELETE - NOT USED
-    private void jBtnAddIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAddIngredientActionPerformed
-    }//GEN-LAST:event_jBtnAddIngredientActionPerformed
-    // Quit Button
+
+   // Quit Button
     private void jBtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCloseActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jBtnCloseActionPerformed
@@ -993,44 +968,16 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextField iProtein;
     private javax.swing.JTextField iServingSize;
     private javax.swing.JTextField iSodium;
-    private javax.swing.JButton jBtnAddIngredient;
     private javax.swing.JButton jBtnAddIngredient1;
-    private javax.swing.JButton jBtnCancel;
-    private javax.swing.JButton jBtnCancel1;
     private javax.swing.JButton jBtnClose;
     private javax.swing.JButton jBtnEditIngred;
     private javax.swing.JButton jBtnGetLabel;
     private javax.swing.JButton jBtnResetAll;
-    private javax.swing.JButton jButtonAdd;
-    private javax.swing.JButton jButtonAdd1;
     private javax.swing.JButton jButtonAddIngredient;
     private javax.swing.JButton jButtonDeleteIngredient;
-    private javax.swing.JComboBox<String> jComboMeasurement;
-    private javax.swing.JComboBox<String> jComboMeasurement1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
@@ -1043,53 +990,26 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelDirections;
     private javax.swing.JPanel jPanelIngredients;
     private javax.swing.JPanel jPanelRecipe;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTable jTable;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextArea jtaDirections;
-    private javax.swing.JTextField jtfAmtInrecipe;
-    private javax.swing.JTextField jtfAmtInrecipe1;
-    private javax.swing.JTextField jtfCalories;
-    private javax.swing.JTextField jtfCalories1;
-    private javax.swing.JTextField jtfCarbs;
-    private javax.swing.JTextField jtfCarbs1;
-    private javax.swing.JTextField jtfCholesterol;
-    private javax.swing.JTextField jtfCholesterol1;
+    private javax.swing.JTextArea jtaNotes;
     private javax.swing.JTextField jtfCookTemp;
     private javax.swing.JTextField jtfCookTime;
-    private javax.swing.JTextField jtfFat;
-    private javax.swing.JTextField jtfFat1;
-    private javax.swing.JTextField jtfFiber;
-    private javax.swing.JTextField jtfFiber1;
-    private javax.swing.JTextField jtfIngredientName;
-    private javax.swing.JTextField jtfIngredientName1;
-    private javax.swing.JTextField jtfProtein;
-    private javax.swing.JTextField jtfProtein1;
     private javax.swing.JTextField jtfRecipeName;
-    private javax.swing.JTextField jtfServingSizeLabel;
-    private javax.swing.JTextField jtfServingSizeLabel1;
     private javax.swing.JTextField jtfServings;
-    private javax.swing.JTextField jtfSodium;
-    private javax.swing.JTextField jtfSodium1;
     private javax.swing.JTextField jtfWeight;
     // End of variables declaration//GEN-END:variables
 }
