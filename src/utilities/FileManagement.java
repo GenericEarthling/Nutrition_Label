@@ -60,8 +60,7 @@ public class FileManagement {
     
     // retrieve Ingredient object
     public static Ingredient fetchIngredient(String name) {
-        // search each line for a match
-        
+        // search each line for a match        
         // if match is found, copy data into an ingredient object        
         try {
             File file = PATH.toFile();
