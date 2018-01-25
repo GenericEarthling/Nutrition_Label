@@ -15,7 +15,7 @@ import static utilities.Calculate.totalNutrientForWholeRecipe;
  */
 public class NutritionLabel extends javax.swing.JFrame {
 
-    static DefaultTableModel labelTable;
+    static DefaultTableModel tableIngredients;
     /**
      * Creates new form NutritionLabel
      */
@@ -24,11 +24,11 @@ public class NutritionLabel extends javax.swing.JFrame {
         
         // get Recipe object data and display
         // display recipe values in NutritionLabel in the box beside the label
-        jLabelName.setText(recipe.getrName());
-        jtfieldNumberServings.setText(Integer.toString(recipe.getServings()));        
-        jTextAreaNotes.setText(recipe.getNotes());
-        double singleServingWeight = recipe.getWeight() / recipe.getServings();
-        jLabelSingleServingWeight.setText(Double.toString(singleServingWeight));
+//        jLabelName.setText(recipe.getrName());
+//        jtfieldNumberServings.setText(Integer.toString(recipe.getServings()));        
+//        jTextAreaNotes.setText(recipe.getNotes());
+//        double singleServingWeight = ( recipe.getWeight() / recipe.getServings() );
+//        jLabelSingleServingWeight.setText(Double.toString(singleServingWeight));
         
         // get ingredients for display in table
 //        double calorieSub = ingredient.getCalories();
@@ -52,9 +52,8 @@ public class NutritionLabel extends javax.swing.JFrame {
 //        jLabelProtein.setText(Double.toString(proteinPerServing));
         
         // table initiator
-        labelTable = (DefaultTableModel)jTableFinalDisplay.getModel();
-        labelTable = MainWindow.table;
-        //labelTable.insertRow(labelTabel.getRowCount(), MainWindow.table);
+        tableIngredients = (DefaultTableModel)jTableIngredients.getModel();
+        tableIngredients = MainWindow.table;
         
 
     }
@@ -69,6 +68,10 @@ public class NutritionLabel extends javax.swing.JFrame {
     private void initComponents() {
 
         jDialogNameError = new javax.swing.JDialog();
+        jPanelMainBkgd = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextAreaNotes = new javax.swing.JTextArea();
+        jLabel20 = new javax.swing.JLabel();
         jPanelNutritionLabel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -95,17 +98,10 @@ public class NutritionLabel extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jtfieldWeight = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
-        jPanel2 = new javax.swing.JPanel();
-        jPanelNotes = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextAreaNotes = new javax.swing.JTextArea();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanelIngredientList = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableFinalDisplay = new javax.swing.JTable();
-        jPanelRecipeName = new javax.swing.JPanel();
         jLabelName = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableIngredients = new javax.swing.JTable();
 
         javax.swing.GroupLayout jDialogNameErrorLayout = new javax.swing.GroupLayout(jDialogNameError.getContentPane());
         jDialogNameError.getContentPane().setLayout(jDialogNameErrorLayout);
@@ -120,6 +116,18 @@ public class NutritionLabel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanelMainBkgd.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTextAreaNotes.setColumns(20);
+        jTextAreaNotes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTextAreaNotes.setLineWrap(true);
+        jTextAreaNotes.setRows(5);
+        jTextAreaNotes.setBorder(null);
+        jScrollPane3.setViewportView(jTextAreaNotes);
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
+        jLabel20.setText("Recipe Notes");
 
         jPanelNutritionLabel.setBackground(new java.awt.Color(255, 255, 255));
         jPanelNutritionLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -321,143 +329,83 @@ public class NutritionLabel extends javax.swing.JFrame {
                 .addGroup(jPanelNutritionLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jLabelProtein))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        getContentPane().add(jPanelNutritionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 301, -1));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 840));
-
-        jPanelNotes.setBackground(new java.awt.Color(255, 255, 255));
-
-        jTextAreaNotes.setColumns(20);
-        jTextAreaNotes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTextAreaNotes.setLineWrap(true);
-        jTextAreaNotes.setRows(5);
-        jTextAreaNotes.setBorder(null);
-        jScrollPane3.setViewportView(jTextAreaNotes);
-
-        jLabel20.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
-        jLabel20.setText("Recipe Notes:");
-
-        javax.swing.GroupLayout jPanelNotesLayout = new javax.swing.GroupLayout(jPanelNotes);
-        jPanelNotes.setLayout(jPanelNotesLayout);
-        jPanelNotesLayout.setHorizontalGroup(
-            jPanelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelNotesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel20)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-        jPanelNotesLayout.setVerticalGroup(
-            jPanelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelNotesLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3)
-                .addContainerGap())
-        );
-
-        getContentPane().add(jPanelNotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, -1, 485));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(924, 0, 100, 840));
-
-        jTableFinalDisplay.setFont(new java.awt.Font("Segoe UI Semilight", 0, 20)); // NOI18N
-        jTableFinalDisplay.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Amount", "Ingredient", "Calories", "Fat", "Carbohydrates", "Fiber", "Protein"
-            }
-        ));
-        jTableFinalDisplay.setToolTipText("");
-        jTableFinalDisplay.setGridColor(new java.awt.Color(102, 102, 102));
-        jTableFinalDisplay.setSelectionBackground(new java.awt.Color(204, 204, 204));
-        jTableFinalDisplay.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableFinalDisplayMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTableFinalDisplay);
-
-        javax.swing.GroupLayout jPanelIngredientListLayout = new javax.swing.GroupLayout(jPanelIngredientList);
-        jPanelIngredientList.setLayout(jPanelIngredientListLayout);
-        jPanelIngredientListLayout.setHorizontalGroup(
-            jPanelIngredientListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelIngredientListLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 808, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanelIngredientListLayout.setVerticalGroup(
-            jPanelIngredientListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelIngredientListLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanelIngredientList, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 590, 830, -1));
-
-        jPanelRecipeName.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabelName.setFont(new java.awt.Font("Segoe UI Light", 0, 36)); // NOI18N
         jLabelName.setForeground(new java.awt.Color(102, 102, 102));
         jLabelName.setText("Recipe Name");
 
-        javax.swing.GroupLayout jPanelRecipeNameLayout = new javax.swing.GroupLayout(jPanelRecipeName);
-        jPanelRecipeName.setLayout(jPanelRecipeNameLayout);
-        jPanelRecipeNameLayout.setHorizontalGroup(
-            jPanelRecipeNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRecipeNameLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        jLabel21.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
+        jLabel21.setText("Ingredient List");
+
+        jTableIngredients.setBackground(new java.awt.Color(240, 247, 212));
+        jTableIngredients.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
+        jTableIngredients.setForeground(new java.awt.Color(52, 123, 152));
+        jTableIngredients.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Amount", "Measure", "Ingredient", "Serving Size", "Calories", "Fat", "Cholesterol", "Sodium", "Carbohydrates", "Fiber", "Protein"
+            }
+        ));
+        jTableIngredients.setToolTipText("");
+        jTableIngredients.setGridColor(new java.awt.Color(52, 123, 152));
+        jTableIngredients.setRowHeight(20);
+        jTableIngredients.setRowMargin(3);
+        jTableIngredients.setSelectionBackground(new java.awt.Color(102, 176, 50));
+        jTableIngredients.setSelectionForeground(new java.awt.Color(240, 247, 212));
+        jScrollPane2.setViewportView(jTableIngredients);
+
+        javax.swing.GroupLayout jPanelMainBkgdLayout = new javax.swing.GroupLayout(jPanelMainBkgd);
+        jPanelMainBkgd.setLayout(jPanelMainBkgdLayout);
+        jPanelMainBkgdLayout.setHorizontalGroup(
+            jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
+                .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
+                        .addGap(234, 234, 234)
+                        .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
+                                .addComponent(jPanelNutritionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(109, 109, 109))
         );
-        jPanelRecipeNameLayout.setVerticalGroup(
-            jPanelRecipeNameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRecipeNameLayout.createSequentialGroup()
-                .addContainerGap()
+        jPanelMainBkgdLayout.setVerticalGroup(
+            jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMainBkgdLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
                 .addComponent(jLabelName)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelNutritionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
-        getContentPane().add(jPanelRecipeName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
+        getContentPane().add(jPanelMainBkgd, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 840));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTableFinalDisplayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFinalDisplayMouseClicked
-
-    }//GEN-LAST:event_jTableFinalDisplayMouseClicked
 
     /**
      * @param args the command line arguments
@@ -468,22 +416,22 @@ public class NutritionLabel extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NutritionLabel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NutritionLabel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NutritionLabel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NutritionLabel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(NutritionLabel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(NutritionLabel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(NutritionLabel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(NutritionLabel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
         //</editor-fold>
 
         /* Create and display the form */
@@ -502,6 +450,7 @@ public class NutritionLabel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -518,18 +467,14 @@ public class NutritionLabel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelProtein;
     private javax.swing.JLabel jLabelSingleServingWeight;
     private javax.swing.JLabel jLabelSodium;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanelIngredientList;
-    private javax.swing.JPanel jPanelNotes;
+    private javax.swing.JPanel jPanelMainBkgd;
     private javax.swing.JPanel jPanelNutritionLabel;
-    private javax.swing.JPanel jPanelRecipeName;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTable jTableFinalDisplay;
+    private javax.swing.JTable jTableIngredients;
     private javax.swing.JTextArea jTextAreaNotes;
     private javax.swing.JTextField jtfieldNumberServings;
     private javax.swing.JTextField jtfieldWeight;
