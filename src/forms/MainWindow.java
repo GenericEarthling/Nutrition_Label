@@ -140,14 +140,16 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Amount", "Measure", "Ingredient", "Serving Size", "Calories", "Fat", "Cholesterol", "Sodium", "Carbohydrates", "Fiber", "Protein"
+                "Amount", "Unit", "Ingredient", "Serving Size", "Calories", "Fat", "Cholesterol", "Sodium", "Carbohydrates", "Fiber", "Protein"
             }
         ));
         jTable.setToolTipText("");
-        jTable.setGridColor(new java.awt.Color(51, 51, 51));
+        jTable.setGridColor(new java.awt.Color(153, 153, 153));
         jTable.setRowHeight(20);
         jTable.setRowMargin(3);
         jTable.setSelectionBackground(new java.awt.Color(255, 153, 0));
+        jTable.setShowHorizontalLines(false);
+        jTable.setShowVerticalLines(false);
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);
@@ -644,16 +646,37 @@ public class MainWindow extends javax.swing.JFrame {
    // Search Button 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
         String searchWord = "";
+        Ingredient i = new Ingredient();
         try {
             searchWord = jTextFieldSearch.getText();
         } catch (NullPointerException e) {
             System.err.println("Input Error at jButtonSearchActionPerformed button: " + e);
             JOptionPane.showMessageDialog(null, "Please input an ingredient to search.",
                 "Error!", JOptionPane.ERROR_MESSAGE);
-            //            String inputValue = JOptionPane.showInputDialog("Please input a value");
+        }        
+        
+        if ( searchWord != null ) {
+            if (FileManagement.fetchIngredient(searchWord) != null) {
+                i = FileManagement.fetchIngredient(searchWord);
+                System.out.println("Search Button returns match: "+i.toString());
+                iName.setText(i.getiName());
+                iServingSize.setText(String.valueOf(i.getServingSize()));
+                iCalories.setText(String.valueOf(i.getCalories()));
+                iFat.setText(String.valueOf(i.getFat()));
+                iCholesterol.setText(String.valueOf(i.getCholesterol()));
+                iSodium.setText(String.valueOf(i.getSodium()));
+                iCarbs.setText(String.valueOf(i.getCarbohydrates()));
+                iFiber.setText(String.valueOf(i.getFiber()));
+                iProtein.setText(String.valueOf(i.getProtein()));
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingredient not found.");
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Error");
         }
-
-        FileManagement.fetchIngredient(searchWord);
+        
+        
     }//GEN-LAST:event_jButtonSearchActionPerformed
 
     // delete the ingredient from the table and subtract the nutrient values    
@@ -696,16 +719,19 @@ public class MainWindow extends javax.swing.JFrame {
     private void jBtnEditIngredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditIngredActionPerformed
         // move the selected Ingredient from table to the Nutrition Label
         // get values from Ingredient.txt file, NOT the calculated values from table
-        iName.setText(selectedIngredient.getiName()); 
-        iServingSize.setText(String.valueOf(selectedIngredient.getServingSize()));
-        iAmtInRecipe.setText(String.valueOf(selectedIngredient.getIngredAmt()));
-//        iCalories.setText(String.valueOf(selectedIngredient.getCalories()));
-//        iFat.setText(String.valueOf(selectedIngredient.getFat()));
-//        iSodium.setText(String.valueOf(selectedIngredient.getSodium()));
-//        iCholesterol.setText(String.valueOf(selectedIngredient.getCholesterol()));
-//        iCarbs.setText(String.valueOf(selectedIngredient.getCarbohydrates()));
-//        iFiber.setText(String.valueOf(selectedIngredient.getFiber()));
-//        iProtein.setText(String.valueOf(selectedIngredient.getProtein()));
+        String editName = selectedIngredient.getiName();
+        Ingredient i;
+        i = FileManagement.fetchIngredient(editName);
+        iName.setText(i.getiName());
+        iServingSize.setText(String.valueOf(i.getServingSize()));
+        iCalories.setText(String.valueOf(i.getCalories()));
+        iFat.setText(String.valueOf(i.getFat()));
+        iCholesterol.setText(String.valueOf(i.getCholesterol()));
+        iSodium.setText(String.valueOf(i.getSodium()));
+        iCarbs.setText(String.valueOf(i.getCarbohydrates()));
+        iFiber.setText(String.valueOf(i.getFiber()));
+        iProtein.setText(String.valueOf(i.getProtein()));
+        iAmtInRecipe.setText(String.valueOf(i.getIngredAmt()));
         iMeasurement.setSelectedIndex(getComboMeasurementIndex(selectedMeasurement));
         
         // delete the ingredient from the table

@@ -60,6 +60,8 @@ public class FileManagement {
     
     // retrieve Ingredient object
     public static Ingredient fetchIngredient(String name) {
+        System.out.println("Search Button pushed/fetchIngredient 1 name is: "+name);
+
         // search each line for a match        
         // if match is found, copy data into an ingredient object        
         try {
@@ -67,9 +69,11 @@ public class FileManagement {
             BufferedReader in = new BufferedReader(
                                 new FileReader(file));
             String data = in.readLine();
+            System.out.println("Search Button pushed/fetchIngredient 2 data is: "+data);
             while (data != null) {
                 StringTokenizer t = new StringTokenizer(data, DELIMITER);
                 String iName = t.nextToken();
+                System.out.println("Search Button pushed/fetchIngredient 3 iName is: "+iName);
                 if (name.equalsIgnoreCase(iName)) {
                     Double servingSize = Double.parseDouble(t.nextToken());
                     Double calories = Double.parseDouble(t.nextToken());
@@ -81,11 +85,13 @@ public class FileManagement {
                     Double protein = Double.parseDouble(t.nextToken());
                     Ingredient i = new Ingredient(iName, servingSize, calories, fat, cholesterol, sodium, carbs, fiber, protein);
                     in.close();
+                    System.out.println("Search Button pushed/fetchIngredient 4 i is: "+i.toString());
                     return i;
                 }
                 data = in.readLine();              // don't think I need this line
             }
             in.close();
+            System.out.println("Search Button pushed/fetchIngredient 5 returns null");
             return null;
         } catch (IOException e) {
             System.err.println("ERROR-fetchIngredient(ingredient): catch exception: " + e);
