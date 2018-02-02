@@ -21,6 +21,11 @@ public class Recipe {
         notes = "";
     }
 
+    public Recipe(String rName, String notes) {
+        this.rName = rName;
+        this.notes = notes;
+    }
+
     public Recipe(String rName, int servings, double weight, String notes) {
         this.rName = rName;
         this.servings = servings;

@@ -24,10 +24,11 @@ import utilities.FileManagement;
 public class MainWindow extends javax.swing.JFrame {
 
     static DefaultTableModel table;
+    static Recipe recipe;
     public String rNotes = "";
     public String rName = "";
     // totals for final display label in NutritionLabel
-    Ingredient ingredientRunningTotals;
+    static Ingredient ingredientRunningTotals;
     Ingredient selectedIngredient;
     String selectedMeasurement;
     double calorieRunningTotals;
@@ -37,7 +38,7 @@ public class MainWindow extends javax.swing.JFrame {
     double carbRunningTotals;
     double fiberRunningTotals;
     double proteinRunningTotals;
-    private static List<String> ingredientList = new ArrayList<>();
+    static List<String> ingredientList = new ArrayList<>();
     
     
     /**
@@ -539,12 +540,17 @@ public class MainWindow extends javax.swing.JFrame {
         try {
             rName = jtfRecipeName.getText();
             rNotes = jtaNotes.getText();
-
+            
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Please enter a name for the recipe.");
             System.err.println("Input Error at Get-Label Action Performed button: " + e);
         }
-
+        
+        // get ingredientList to display
+        
+        // save recipe values
+        recipe = new Recipe(rName, rNotes);
+        
         // open an instance of the Print Label Window
         NutritionLabel nl = new NutritionLabel();
         nl.setVisible(true);
@@ -553,6 +559,8 @@ public class MainWindow extends javax.swing.JFrame {
         nl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jBtnGetLabelActionPerformed
 
+    
+    
    // Quit Button
     private void jBtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCloseActionPerformed
         System.exit(0);
@@ -611,9 +619,10 @@ public class MainWindow extends javax.swing.JFrame {
         + ", Serving Size: " + servingSize + ", cal: " + calorieTotal
         + ", fat: " + fatTotal + ", cholesterol: " + cholTotal
         + ", sodium: " + sodiumTotal + ", carbs: " + carbTotal
-        + ", fiber: " + fiberTotal + ", protein: " + proteinTotal;
+        + ", fiber: " + fiberTotal + ", protein: " + proteinTotal + "\n";
         ingredientList.add(ingredientString);
         System.out.println("MainWindow Class:: Nutrient total: " + ingredientString);
+        System.out.println("MainWindow Class:: ingredientList ArrayList: " + ingredientList);
 
         // accumulate totals for final display label in NutritionLabel
         calorieRunningTotals += calorieTotal;
@@ -667,8 +676,7 @@ public class MainWindow extends javax.swing.JFrame {
                 iProtein.setText(String.valueOf(i.getProtein()));
             } else {
                 JOptionPane.showMessageDialog(null, "Ingredient not found.");
-            }
-            
+            }            
         } else {
             JOptionPane.showMessageDialog(null, "Error");
         }
