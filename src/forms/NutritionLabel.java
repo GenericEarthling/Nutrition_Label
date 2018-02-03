@@ -50,7 +50,7 @@ public class NutritionLabel extends javax.swing.JFrame {
         } 
         
         for (String s: tableIngredientList) {
-            String ingredAmt = s;
+            jLabelArrayList.setText(String.valueOf(s));
 //            tableIngredients.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
             System.out.println("NutritionLabel Class:: foreach s: " + s);
         }
@@ -107,6 +107,7 @@ public class NutritionLabel extends javax.swing.JFrame {
         jTableIngredients = new javax.swing.JTable();
         jLabel22 = new javax.swing.JLabel();
         jLabelArrayList = new javax.swing.JLabel();
+        jLabelArrayListHeading = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialogNameErrorLayout = new javax.swing.GroupLayout(jDialogNameError.getContentPane());
         jDialogNameError.getContentPane().setLayout(jDialogNameErrorLayout);
@@ -380,6 +381,10 @@ public class NutritionLabel extends javax.swing.JFrame {
         jLabelArrayList.setForeground(new java.awt.Color(72, 72, 72));
         jLabelArrayList.setText("array list");
 
+        jLabelArrayListHeading.setFont(new java.awt.Font("Segoe UI Light", 1, 16)); // NOI18N
+        jLabelArrayListHeading.setForeground(new java.awt.Color(72, 72, 72));
+        jLabelArrayListHeading.setText("Amount        Unit  Ingredient          Serve Size     Cal.      Fat    Chol.   Sodium    Carb.    Fiber  Protein");
+
         javax.swing.GroupLayout jPanelMainBkgdLayout = new javax.swing.GroupLayout(jPanelMainBkgd);
         jPanelMainBkgd.setLayout(jPanelMainBkgdLayout);
         jPanelMainBkgdLayout.setHorizontalGroup(
@@ -402,7 +407,8 @@ public class NutritionLabel extends javax.swing.JFrame {
                             .addComponent(jLabel21)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelArrayList)
-                            .addComponent(jLabel22))))
+                            .addComponent(jLabel22)
+                            .addComponent(jLabelArrayListHeading))))
                 .addGap(109, 109, 109))
         );
         jPanelMainBkgdLayout.setVerticalGroup(
@@ -423,9 +429,11 @@ public class NutritionLabel extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel21)
+                .addGap(8, 8, 8)
+                .addComponent(jLabelArrayListHeading)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelArrayList)
-                .addGap(94, 94, 94))
+                .addGap(64, 64, 64))
         );
 
         getContentPane().add(jPanelMainBkgd, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 860));
@@ -506,6 +514,7 @@ public class NutritionLabel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelArrayList;
+    private javax.swing.JLabel jLabelArrayListHeading;
     private javax.swing.JLabel jLabelCalories;
     private javax.swing.JLabel jLabelCarbohydrates;
     private javax.swing.JLabel jLabelCholesterol;

@@ -8,6 +8,8 @@ import beans.Recipe;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -547,7 +549,6 @@ public class MainWindow extends javax.swing.JFrame {
             System.err.println("Input Error at Get-Label Action Performed button: " + e);
         }
         
-        // get ingredientList to display
         
         // save recipe values
         recipe = new Recipe(rName, rNotes);
@@ -613,24 +614,32 @@ public class MainWindow extends javax.swing.JFrame {
         double carbTotal = nutrientTotal(servingSize, carbs, ingredAmt, measure);
         double fiberTotal = nutrientTotal(servingSize, fiber, ingredAmt, measure);
         double proteinTotal = nutrientTotal(servingSize, protein, ingredAmt, measure);
-        table.insertRow(table.getRowCount(), new Object[]{name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
-        ingredientList = new Ingredient(name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal);
-        tableIngredientList.add(String.valueOf(ingredientList));
-
-//        ingredientList.add("|");  // delimiter
-//        for (String s: ingredientList) {
-//            System.out.println(s);
-//        }
+        table.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
         
+        // save values for display ingredient list in print window
+        tableIngredientList.add(String.valueOf(ingredAmt));
+        tableIngredientList.add(String.valueOf(measure));
+        tableIngredientList.add(String.valueOf(name));
+        tableIngredientList.add(String.valueOf(servingSize));
+        tableIngredientList.add(String.valueOf(calorieTotal));
+        tableIngredientList.add(String.valueOf(fatTotal));
+        tableIngredientList.add(String.valueOf(cholTotal));
+        tableIngredientList.add(String.valueOf(sodiumTotal));
+        tableIngredientList.add(String.valueOf(carbTotal));
+        tableIngredientList.add(String.valueOf(fiberTotal));
+        tableIngredientList.add(String.valueOf(proteinTotal));
+
         // save values to array list for display in NutritionLabel for printing
-//        String ingredientString = ingredAmt + " " + measure + ", " + name
-//        + ", Serving Size: " + servingSize + ", cal: " + calorieTotal
-//        + ", fat: " + fatTotal + ", cholesterol: " + cholTotal
-//        + ", sodium: " + sodiumTotal + ", carbs: " + carbTotal
-//        + ", fiber: " + fiberTotal + ", protein: " + proteinTotal + "|";
-//        ingredientList.add(ingredientString);
-//        System.out.println("MainWindow Class:: Nutrient total: " + ingredientString);
-//        System.out.println("MainWindow Class:: ingredientList ArrayList: " + ingredientList);
+        String ingredientString = ingredAmt + " " + measure + " " + name
+        + " " + servingSize + " " + calorieTotal
+        + " " + fatTotal + " " + cholTotal
+        + " " + sodiumTotal + " " + carbTotal
+        + " " + fiberTotal + " " + proteinTotal + "\n";    
+        tableIngredientList.add(ingredientString);
+        
+        // don't need this part
+        System.out.printf("%6s %11s %-19s %11s %8s %8s %8s %8s %8s %8s %8s\n","Amount","Unit","Ingredient","Serve Size","Cal.","Fat","Chol.","Sodium","Carb.","Fiber","Protein");
+        System.out.printf("%6s %11s %-19s %11s %8s %8s %8s %8s %8s %8s %8s\n",ingredAmt,measure,name,servingSize,calorieTotal,fatTotal,cholTotal,sodiumTotal,carbTotal,fiberTotal,proteinTotal);
 
         // accumulate totals for final display label in NutritionLabel
         calorieRunningTotals += calorieTotal;
