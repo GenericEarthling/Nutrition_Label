@@ -21,6 +21,7 @@ public class Ingredient {
     private double fiber;
     private double protein;
     private double ingredAmt;
+    private String measure;
 
     // default construct sets the default values
     public Ingredient() {
@@ -34,6 +35,7 @@ public class Ingredient {
         fiber = 0;
         protein = 0;
         ingredAmt = 0;
+        measure = "";
     }
 
     // constructor for Ingredient that is saved to file
@@ -61,7 +63,21 @@ public class Ingredient {
     }
 
     // constructor for Ingredient used for sending data from MainWindow to Nutrition Window 
-    public Ingredient(String iName, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein, double ingredAmt) {
+//    public Ingredient(String iName, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein, double ingredAmt) {
+//        this.iName = iName;
+//        this.servingSize = servingSize;
+//        this.calories = calories;
+//        this.fat = fat;
+//        this.cholesterol = cholesterol;
+//        this.sodium = sodium;
+//        this.carbohydrates = carbohydrates;
+//        this.fiber = fiber;
+//        this.protein = protein;
+//        this.ingredAmt = ingredAmt;
+//    }
+
+    // constructor for Ingredient used for sending data from MainWindow to Nutrition Window 
+    public Ingredient(String iName, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein, double ingredAmt, String measure) {
         this.iName = iName;
         this.servingSize = servingSize;
         this.calories = calories;
@@ -72,21 +88,22 @@ public class Ingredient {
         this.fiber = fiber;
         this.protein = protein;
         this.ingredAmt = ingredAmt;
+        this.measure = measure;
     }
     
     // constructor for order of input for table and form (order of input and display)
-    public Ingredient(double ingredAmt, String iName, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein) {
-        this.iName = iName;
-        this.servingSize = servingSize;
-        this.calories = calories;
-        this.fat = fat;
-        this.cholesterol = cholesterol;
-        this.sodium = sodium;
-        this.carbohydrates = carbohydrates;
-        this.fiber = fiber;
-        this.protein = protein;
-        this.ingredAmt = ingredAmt;
-    }
+//    public Ingredient(double ingredAmt, String iName, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein) {
+//        this.iName = iName;
+//        this.servingSize = servingSize;
+//        this.calories = calories;
+//        this.fat = fat;
+//        this.cholesterol = cholesterol;
+//        this.sodium = sodium;
+//        this.carbohydrates = carbohydrates;
+//        this.fiber = fiber;
+//        this.protein = protein;
+//        this.ingredAmt = ingredAmt;
+//    }
 
     public String getiName() {
         return iName;
@@ -166,6 +183,14 @@ public class Ingredient {
 
     public void setIngredAmt(double ingredAmt) {
         this.ingredAmt = ingredAmt;
+    }
+
+    public String getMeasure() {
+        return measure;
+    }
+
+    public void setMeasure(String measure) {
+        this.measure = measure;
     }
 
     @Override

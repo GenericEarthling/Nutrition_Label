@@ -40,8 +40,9 @@ public class MainWindow extends javax.swing.JFrame {
     double carbRunningTotals;
     double fiberRunningTotals;
     double proteinRunningTotals;
-    static List<String> tableIngredientList = new ArrayList<>();
+    static List<Ingredient> tableIngredientList = new ArrayList<>();
     static Ingredient ingredientList;
+    static Ingredient tableRow;
     
     
     /**
@@ -547,8 +548,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Please enter a name for the recipe.");
             System.err.println("Input Error at Get-Label Action Performed button: " + e);
-        }
-        
+        }        
         
         // save recipe values
         recipe = new Recipe(rName, rNotes);
@@ -598,8 +598,7 @@ public class MainWindow extends javax.swing.JFrame {
             System.err.print("Input Error at AddActionPerformed button: " + e);
         }
         // save values entered to file
-        Ingredient ingredientToFile = new Ingredient(ingredAmt, name, servingSize, cal, fat, cholesterol, sodium, carbs, fiber, protein);
-        System.out.println("Entered values: " + ingredientToFile.toString() + " measure: " + measure);
+        Ingredient ingredientToFile = new Ingredient(name, servingSize, cal, fat, cholesterol, sodium, carbs, fiber, protein);
         try {
             FileManagement.saveIngredient(ingredientToFile);
         } catch (IOException ex) {
@@ -616,26 +615,15 @@ public class MainWindow extends javax.swing.JFrame {
         double proteinTotal = nutrientTotal(servingSize, protein, ingredAmt, measure);
         table.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
         
-        // save values for display ingredient list in print window
-        tableIngredientList.add(String.valueOf(ingredAmt));
-        tableIngredientList.add(String.valueOf(measure));
-        tableIngredientList.add(String.valueOf(name));
-        tableIngredientList.add(String.valueOf(servingSize));
-        tableIngredientList.add(String.valueOf(calorieTotal));
-        tableIngredientList.add(String.valueOf(fatTotal));
-        tableIngredientList.add(String.valueOf(cholTotal));
-        tableIngredientList.add(String.valueOf(sodiumTotal));
-        tableIngredientList.add(String.valueOf(carbTotal));
-        tableIngredientList.add(String.valueOf(fiberTotal));
-        tableIngredientList.add(String.valueOf(proteinTotal));
-
+        tableRow = new Ingredient(name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal, ingredAmt, measure);
+        
         // save values to array list for display in NutritionLabel for printing
-        String ingredientString = ingredAmt + " " + measure + " " + name
-        + " " + servingSize + " " + calorieTotal
-        + " " + fatTotal + " " + cholTotal
-        + " " + sodiumTotal + " " + carbTotal
-        + " " + fiberTotal + " " + proteinTotal + "\n";    
-        tableIngredientList.add(ingredientString);
+//        String ingredientString = ingredAmt + " " + measure + " " + name
+//        + " " + servingSize + " " + calorieTotal
+//        + " " + fatTotal + " " + cholTotal
+//        + " " + sodiumTotal + " " + carbTotal
+//        + " " + fiberTotal + " " + proteinTotal + "\n";    
+        tableIngredientList.add(tableRow);
         
         // don't need this part
         System.out.printf("%6s %11s %-19s %11s %8s %8s %8s %8s %8s %8s %8s\n","Amount","Unit","Ingredient","Serve Size","Cal.","Fat","Chol.","Sodium","Carb.","Fiber","Protein");
@@ -732,10 +720,22 @@ public class MainWindow extends javax.swing.JFrame {
         String carbs = String.valueOf(table.getValueAt(jTable.getSelectedRow(), 8));
         String fiber = String.valueOf(table.getValueAt(jTable.getSelectedRow(), 9));
         String protein = String.valueOf(table.getValueAt(jTable.getSelectedRow(), 10));
+        
+        // convert Strings to doubles
+        double d_amount = Double.parseDouble(amount);
+        double d_servingSize = Double.parseDouble(servingSize);
+        double d_calories = Double.parseDouble(calories);
+        double d_fat = Double.parseDouble(fat);
+        double d_cholesterol = Double.parseDouble(cholesterol);
+        double d_sodium = Double.parseDouble(sodium);
+        double d_carbs = Double.parseDouble(carbs);
+        double d_fiber = Double.parseDouble(fiber);
+        double d_protein = Double.parseDouble(protein);        
 
         // check values recieved from the mouse click event
-        selectedIngredient = new Ingredient(Double.parseDouble(amount), name, Double.parseDouble(servingSize), Double.parseDouble(calories), Double.parseDouble(fat), Double.parseDouble(cholesterol), Double.parseDouble(sodium), Double.parseDouble(carbs), Double.parseDouble(fiber), Double.parseDouble(protein));
-        System.out.println("MainWindow: jTableMouseClicked ::: " + selectedIngredient.toString() + "  measurment: " + selectedMeasurement);
+        selectedIngredient = new Ingredient(name, d_servingSize, d_calories, d_fat, d_cholesterol, d_sodium, d_carbs, d_fiber, d_protein, d_amount, selectedMeasurement);
+
+//        System.out.println("MainWindow: jTableMouseClicked ::: " + selectedIngredient.toString() + "  measurment: " + selectedMeasurement);
     }//GEN-LAST:event_jTableMouseClicked
 
     private void jBtnEditIngredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditIngredActionPerformed

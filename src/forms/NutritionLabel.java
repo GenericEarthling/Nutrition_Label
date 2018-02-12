@@ -3,6 +3,7 @@
  */
 package forms;
 
+import beans.Ingredient;
 import static forms.MainWindow.ingredientList;
 import static forms.MainWindow.ingredientRunningTotals;
 import static forms.MainWindow.recipe;
@@ -49,15 +50,27 @@ public class NutritionLabel extends javax.swing.JFrame {
                 "Error!", JOptionPane.ERROR_MESSAGE);            
         } 
         
-        for (String s: tableIngredientList) {
-            jLabelArrayList.setText(String.valueOf(s));
-//            tableIngredients.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
+        for (Ingredient s: tableIngredientList) {
+            double ingredAmt = s.getIngredAmt();
+            String measure = s.getMeasure();
+            String name = s.getiName();
+            double servingSize = s.getServingSize();
+            double calorieTotal = s.getCalories();
+            double fatTotal = s.getFat();
+            double cholTotal = s.getCholesterol();
+            double sodiumTotal = s.getSodium();
+            double carbTotal = s.getCarbohydrates();
+            double fiberTotal = s.getFiber();
+            double proteinTotal = s.getProtein();
+            
+//            jLabelArrayList.setText(String.valueOf(s));
+            tableIngredients.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
             System.out.println("NutritionLabel Class:: foreach s: " + s);
         }
 
         // arrayList display
-        jLabelArrayList.setText(String.valueOf(ingredientList));
-        System.out.println("NutritionLabel Class:: ingredientList ArrayList: " + ingredientList);        
+        jLabelArrayList.setText(String.valueOf(tableIngredientList));
+        
 
     }
 
