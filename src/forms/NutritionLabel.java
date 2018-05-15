@@ -10,6 +10,8 @@ import static forms.MainWindow.recipe;
 import static forms.MainWindow.table;
 import static forms.MainWindow.tableIngredientList;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -50,6 +52,7 @@ public class NutritionLabel extends javax.swing.JFrame {
                 "Error!", JOptionPane.ERROR_MESSAGE);            
         } 
         
+//        ArrayList iter = new ArrayList();
         for (Ingredient s: tableIngredientList) {
             double ingredAmt = s.getIngredAmt();
             String measure = s.getMeasure();
@@ -63,7 +66,6 @@ public class NutritionLabel extends javax.swing.JFrame {
             double fiberTotal = s.getFiber();
             double proteinTotal = s.getProtein();
             
-//            jLabelArrayList.setText(String.valueOf(s));
             tableIngredients.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
             System.out.println("NutritionLabel Class:: foreach s: " + s);
         }
