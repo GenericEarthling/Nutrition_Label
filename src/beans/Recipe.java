@@ -9,36 +9,43 @@ package beans;
  */
 public class Recipe {
     
-    private String rName;
+    private String name;
     private int servings;
-    private double weight;
     private String notes;
+    private Ingredient[] ingredient;
+    private int ingredientSize;
 
     public Recipe() {
-        rName = "";
+        name = "";
         servings = 0;
-        weight = 0;
         notes = "";
     }
 
-    public Recipe(String rName, String notes) {
-        this.rName = rName;
+    public Recipe(String name, String notes, int servings, int ingredientCapacity) {
+        ingredientSize = 0;
+        this.name = name;
         this.notes = notes;
-    }
-
-    public Recipe(String rName, int servings, double weight, String notes) {
-        this.rName = rName;
         this.servings = servings;
-        this.weight = weight;
+        ingredient = new Ingredient[ingredientCapacity];
+    }
+
+    public Recipe(String rName, String notes) {
+        this.name = rName;
         this.notes = notes;
     }
 
-    public String getrName() {
-        return rName;
+    public Recipe(String rName, int servings, String notes) {
+        this.name = rName;
+        this.servings = servings;
+        this.notes = notes;
     }
 
-    public void setrName(String rName) {
-        this.rName = rName;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getServings() {
@@ -49,14 +56,6 @@ public class Recipe {
         this.servings = servings;
     }
 
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
     public String getNotes() {
         return notes;
     }
@@ -65,9 +64,23 @@ public class Recipe {
         this.notes = notes;
     }   
 
+    public Ingredient[] getIngredient() {
+        return ingredient;
+    }
+
+    public void setIngredient(Ingredient ingred) {
+        ingredient[ingredientSize] = ingred;
+        ingredientSize++;
+    }
+    
     @Override
     public String toString() {
-        return "Recipe{" + "rName=" + rName + ", servings=" + servings + ", weight=" + weight + ", notes=" + notes + '}';
+        String recipe = "Recipe: " + name + "\nNotes: " + notes + "\nServings: " + servings + "\nIngredient List:\n";        
+        recipe += "NAME\tAMT\tUNIT\tCAL\tFAT\tCHOL\tSODIM\tCARBS\tFIBER\tPROTN\n";
+        for ( int i = 0; i < ingredientSize; i++) {
+            recipe += ingredient[i].toString() + "\n";
+        }            
+        return recipe;        
     }
     
     

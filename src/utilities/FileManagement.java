@@ -44,7 +44,7 @@ public class FileManagement {
                 new BufferedWriter(
                 new FileWriter(file, true)), true)) {
             // save each column of data in this specific order
-            out.print(ingredient.getiName() + DELIMITER);
+            out.print(ingredient.getName() + DELIMITER);
             out.print(ingredient.getServingSize() + DELIMITER);
             out.print(ingredient.getCalories() + DELIMITER);
             out.print(ingredient.getFat()+ DELIMITER);

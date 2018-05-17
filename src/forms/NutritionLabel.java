@@ -32,7 +32,7 @@ public class NutritionLabel extends javax.swing.JFrame {
         initComponents();
         
         // display recipe name and notes 
-        jLabelName.setText(recipe.getrName());
+        jLabelName.setText(recipe.getName());
         jTextAreaNotes.setText(recipe.getNotes());        
         
         // get total ingredient nutrient values for display in label
@@ -56,7 +56,7 @@ public class NutritionLabel extends javax.swing.JFrame {
         for (Ingredient s: tableIngredientList) {
             double ingredAmt = s.getIngredAmt();
             String measure = s.getMeasure();
-            String name = s.getiName();
+            String name = s.getName();
             double servingSize = s.getServingSize();
             double calorieTotal = s.getCalories();
             double fatTotal = s.getFat();

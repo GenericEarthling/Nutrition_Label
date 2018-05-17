@@ -670,7 +670,7 @@ public class MainWindow extends javax.swing.JFrame {
             if (FileManagement.fetchIngredient(searchWord) != null) {
                 i = FileManagement.fetchIngredient(searchWord);
                 System.out.println("Search Button returns match: "+i.toString());
-                iName.setText(i.getiName());
+                iName.setText(i.getName());
                 iServingSize.setText(String.valueOf(i.getServingSize()));
                 iCalories.setText(String.valueOf(i.getCalories()));
                 iFat.setText(String.valueOf(i.getFat()));
@@ -741,10 +741,10 @@ public class MainWindow extends javax.swing.JFrame {
     private void jBtnEditIngredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditIngredActionPerformed
         // move the selected Ingredient from table to the Nutrition Label
         // get values from Ingredient.txt file, NOT the calculated values from table
-        String editName = selectedIngredient.getiName();
+        String editName = selectedIngredient.getName();
         Ingredient i;
         i = FileManagement.fetchIngredient(editName);
-        iName.setText(i.getiName());
+        iName.setText(i.getName());
         iServingSize.setText(String.valueOf(i.getServingSize()));
         iCalories.setText(String.valueOf(i.getCalories()));
         iFat.setText(String.valueOf(i.getFat()));

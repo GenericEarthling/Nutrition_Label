@@ -11,7 +11,7 @@ package beans;
  */
 public class Ingredient {
     
-    private String iName;
+    private String name;
     private double servingSize;
     private double calories;
     private double fat;
@@ -25,7 +25,7 @@ public class Ingredient {
 
     // default construct sets the default values
     public Ingredient() {
-        iName = "";
+        name = "";
         servingSize = 0;
         calories = 0;
         fat = 0;
@@ -39,8 +39,8 @@ public class Ingredient {
     }
 
     // constructor for Ingredient that is saved to file
-    public Ingredient(String iName, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein) {
-        this.iName = iName;
+    public Ingredient(String name, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein) {
+        this.name = name;
         this.servingSize = servingSize;
         this.calories = calories;
         this.fat = fat;
@@ -63,22 +63,8 @@ public class Ingredient {
     }
 
     // constructor for Ingredient used for sending data from MainWindow to Nutrition Window 
-//    public Ingredient(String iName, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein, double ingredAmt) {
-//        this.iName = iName;
-//        this.servingSize = servingSize;
-//        this.calories = calories;
-//        this.fat = fat;
-//        this.cholesterol = cholesterol;
-//        this.sodium = sodium;
-//        this.carbohydrates = carbohydrates;
-//        this.fiber = fiber;
-//        this.protein = protein;
-//        this.ingredAmt = ingredAmt;
-//    }
-
-    // constructor for Ingredient used for sending data from MainWindow to Nutrition Window 
-    public Ingredient(String iName, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein, double ingredAmt, String measure) {
-        this.iName = iName;
+    public Ingredient(String name, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein, double ingredAmt, String measure) {
+        this.name = name;
         this.servingSize = servingSize;
         this.calories = calories;
         this.fat = fat;
@@ -90,27 +76,13 @@ public class Ingredient {
         this.ingredAmt = ingredAmt;
         this.measure = measure;
     }
-    
-    // constructor for order of input for table and form (order of input and display)
-//    public Ingredient(double ingredAmt, String iName, double servingSize, double calories, double fat, double cholesterol, double sodium, double carbohydrates, double fiber, double protein) {
-//        this.iName = iName;
-//        this.servingSize = servingSize;
-//        this.calories = calories;
-//        this.fat = fat;
-//        this.cholesterol = cholesterol;
-//        this.sodium = sodium;
-//        this.carbohydrates = carbohydrates;
-//        this.fiber = fiber;
-//        this.protein = protein;
-//        this.ingredAmt = ingredAmt;
-//    }
 
-    public String getiName() {
-        return iName;
+    public String getName() {
+        return name;
     }
 
-    public void setiName(String iName) {
-        this.iName = iName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getServingSize() {
@@ -195,8 +167,11 @@ public class Ingredient {
 
     @Override
     public String toString() {
-        return "Ingredient{" + "iName=" + iName + ", servingSize=" + servingSize + ", calories=" + calories + ", fat=" + fat + ", cholesterol=" + cholesterol + ", sodium=" + sodium + ", carbohydrates=" + carbohydrates + ", fiber=" + fiber + ", protein=" + protein + ", ingredAmt=" + ingredAmt + '}';
+        String ingredient;
+        ingredient = name + "\t" + ingredAmt + "\t" + measure + "\t" + calories + "\t" + 
+                fat + "\t" + cholesterol + "\t" + sodium + "\t" + carbohydrates + 
+                "\t" + fiber + "\t" + protein;
+        return ingredient;
     }
         
-    
 }
