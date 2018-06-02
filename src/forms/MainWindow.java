@@ -6,6 +6,10 @@ package forms;
 import beans.Ingredient;
 import beans.Recipe;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +31,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     static DefaultTableModel table;
     static Recipe recipe;
-    public String rNotes = "";
-    public String rName = "";
+    public String rNotes;
+    public String rName;
+    public int rServings;
+    private int ingredCount = 0;
     // totals for final display label in NutritionLabel
     static Ingredient ingredientRunningTotals;
     Ingredient selectedIngredient;
@@ -43,7 +49,7 @@ public class MainWindow extends javax.swing.JFrame {
     static List<Ingredient> tableIngredientList = new ArrayList<>();
     static Ingredient ingredientList;
     static Ingredient tableRow;
-    
+    private Statement statement;
     
     /**
      * Creates new form MainWindow
@@ -52,8 +58,34 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         table=(DefaultTableModel)jTable.getModel();
         this.setLocationRelativeTo(null);
+        
+        try {
+            initializeDB();       // connect to database
+        } catch (SQLException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    private void initializeDB() throws SQLException, ClassNotFoundException {
+        try {
+            // Load the JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");   // com.mysql.jdbc.Driver (this is deprecated)
+            System.out.println("Driver loaded");
+
+            // Connect to a database
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/ingredientdb" , "st", "word");
+            System.out.println("Database connected");
+
+            // Create a statement
+            statement = connection.createStatement();  
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -457,10 +489,10 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addGroup(jPanelIngredientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanelIngredientsLayout.createSequentialGroup()
                                         .addGroup(jPanelIngredientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanelIngredientsLayout.createSequentialGroup()
+                                            .addComponent(jLabelIngredList)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelIngredientsLayout.createSequentialGroup()
                                                 .addGap(0, 3, Short.MAX_VALUE)
-                                                .addComponent(jtfRecipeName, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jLabelIngredList))
+                                                .addComponent(jtfRecipeName, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(jPanelIngredientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanelIngredientsLayout.createSequentialGroup()
                                                 .addGap(126, 126, 126)
@@ -542,11 +574,9 @@ public class MainWindow extends javax.swing.JFrame {
 
         // get user input recipe values
         try {
-            rName = jtfRecipeName.getText();
-            rNotes = jtaNotes.getText();
-            
+                rName = jtfRecipeName.getText();
+                rNotes = jtaNotes.getText();
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "Please enter a name for the recipe.");
             System.err.println("Input Error at Get-Label Action Performed button: " + e);
         }        
         
@@ -597,7 +627,7 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (NumberFormatException e) {
             System.err.print("Input Error at AddActionPerformed button: " + e);
         }
-        // save values entered to file
+        // save data to file (FileManagement class)
         Ingredient ingredientToFile = new Ingredient(name, servingSize, cal, fat, cholesterol, sodium, carbs, fiber, protein);
         try {
             FileManagement.saveIngredient(ingredientToFile);
@@ -616,20 +646,9 @@ public class MainWindow extends javax.swing.JFrame {
         table.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
         
         tableRow = new Ingredient(name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal, ingredAmt, measure);
-        
-        // save values to array list for display in NutritionLabel for printing
-//        String ingredientString = ingredAmt + " " + measure + " " + name
-//        + " " + servingSize + " " + calorieTotal
-//        + " " + fatTotal + " " + cholTotal
-//        + " " + sodiumTotal + " " + carbTotal
-//        + " " + fiberTotal + " " + proteinTotal + "\n";    
         tableIngredientList.add(tableRow);
         
-        // don't need this part
-        System.out.printf("%6s %11s %-19s %11s %8s %8s %8s %8s %8s %8s %8s\n","Amount","Unit","Ingredient","Serve Size","Cal.","Fat","Chol.","Sodium","Carb.","Fiber","Protein");
-        System.out.printf("%6s %11s %-19s %11s %8s %8s %8s %8s %8s %8s %8s\n",ingredAmt,measure,name,servingSize,calorieTotal,fatTotal,cholTotal,sodiumTotal,carbTotal,fiberTotal,proteinTotal);
-
-        // accumulate totals for final display label in NutritionLabel
+        // CREATE running totals ingredient object for the NutritionLabel.java
         calorieRunningTotals += calorieTotal;
         fatRunningTotals += fatTotal;
         cholRunningTotals += cholTotal;
@@ -694,7 +713,7 @@ public class MainWindow extends javax.swing.JFrame {
         // Use jTableMouseClicked event to get the selected Ingredient from table
         table.removeRow(jTable.getSelectedRow());
 
-        // subtract the selected ingredient from the totals
+        // SUBTRACT and UPDATE running totals to ingredient object for the NutritionLabel.java
         calorieRunningTotals -= selectedIngredient.getCalories();
         fatRunningTotals -= selectedIngredient.getFat();
         cholRunningTotals -= selectedIngredient.getCholesterol();
@@ -702,8 +721,6 @@ public class MainWindow extends javax.swing.JFrame {
         carbRunningTotals -= selectedIngredient.getCarbohydrates();
         fiberRunningTotals -= selectedIngredient.getFiber();
         proteinRunningTotals -= selectedIngredient.getProtein();
-
-        // save new running totals to ingredient object
         ingredientRunningTotals = new Ingredient(calorieRunningTotals, fatRunningTotals, cholRunningTotals, sodiumRunningTotals, carbRunningTotals, fiberRunningTotals, proteinRunningTotals);
     }//GEN-LAST:event_jButtonDeleteIngredientActionPerformed
 
@@ -721,7 +738,6 @@ public class MainWindow extends javax.swing.JFrame {
         String fiber = String.valueOf(table.getValueAt(jTable.getSelectedRow(), 9));
         String protein = String.valueOf(table.getValueAt(jTable.getSelectedRow(), 10));
         
-        // convert Strings to doubles
         double d_amount = Double.parseDouble(amount);
         double d_servingSize = Double.parseDouble(servingSize);
         double d_calories = Double.parseDouble(calories);
@@ -732,10 +748,8 @@ public class MainWindow extends javax.swing.JFrame {
         double d_fiber = Double.parseDouble(fiber);
         double d_protein = Double.parseDouble(protein);        
 
-        // check values recieved from the mouse click event
+        // CREATE ingredient object with the ingredient selected in the table
         selectedIngredient = new Ingredient(name, d_servingSize, d_calories, d_fat, d_cholesterol, d_sodium, d_carbs, d_fiber, d_protein, d_amount, selectedMeasurement);
-
-//        System.out.println("MainWindow: jTableMouseClicked ::: " + selectedIngredient.toString() + "  measurment: " + selectedMeasurement);
     }//GEN-LAST:event_jTableMouseClicked
 
     private void jBtnEditIngredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditIngredActionPerformed
@@ -759,7 +773,7 @@ public class MainWindow extends javax.swing.JFrame {
         // delete the ingredient from the table
         table.removeRow(jTable.getSelectedRow());
         
-        // subtract the selected ingredient from the totals
+        // SUBTRACT and UPDATE running totals to ingredient object for the NutritionLabel.java
         calorieRunningTotals -= selectedIngredient.getCalories();
         fatRunningTotals -= selectedIngredient.getFat();
         cholRunningTotals -= selectedIngredient.getCholesterol();
@@ -767,8 +781,6 @@ public class MainWindow extends javax.swing.JFrame {
         carbRunningTotals -= selectedIngredient.getCarbohydrates();
         fiberRunningTotals -= selectedIngredient.getFiber();
         proteinRunningTotals -= selectedIngredient.getProtein();
-        
-        // save new running totals to ingredient object
         ingredientRunningTotals = new Ingredient(calorieRunningTotals, fatRunningTotals, cholRunningTotals, sodiumRunningTotals, carbRunningTotals, fiberRunningTotals, proteinRunningTotals);
     }//GEN-LAST:event_jBtnEditIngredActionPerformed
 
@@ -791,18 +803,19 @@ public class MainWindow extends javax.swing.JFrame {
     
     // test user input to see if valid type 
     public int intTest(String userInput) {
+        int i = 0;
         try {
             if (userInput != null) {
-                int i = Integer.parseInt(userInput);
-                return i;
+                i = Integer.parseInt(userInput);
             } 
             else {
-                return 0;
+                JOptionPane.showMessageDialog(null, "Please enter an integer.",
+                "Error!", JOptionPane.ERROR_MESSAGE);
             }
         } catch(NumberFormatException e) {
             System.err.println("Input Error at intTest: " + e);
-            return 0;
         }
+        return i;
     }
     
     // used in editing table rows. Gets the index value for combo box.

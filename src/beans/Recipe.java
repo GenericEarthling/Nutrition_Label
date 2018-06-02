@@ -1,5 +1,7 @@
-/*
+/**
  * gets the whole recipe object
+ * zoo/animal example: 
+ * https://stackoverflow.com/questions/8273409/how-to-assign-multiple-objects-to-another-class-object
  */
 package beans;
 
