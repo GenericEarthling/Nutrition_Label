@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -627,10 +628,12 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (NumberFormatException e) {
             System.err.print("Input Error at AddActionPerformed button: " + e);
         }
-        // save data to file (FileManagement class)
+        // save data to file if it is not a duplicate
         Ingredient ingredientToFile = new Ingredient(name, servingSize, cal, fat, cholesterol, sodium, carbs, fiber, protein);
         try {
-            FileManagement.saveIngredient(ingredientToFile);
+            if (FileManagement.isDuplicate(name) == false){
+                FileManagement.saveIngredient(ingredientToFile);
+            }
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -679,18 +682,15 @@ public class MainWindow extends javax.swing.JFrame {
 
    // Search Button 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
-        String searchWord = "";
+        String searchWord;
         Ingredient i = new Ingredient();
         try {
             searchWord = jTextFieldSearch.getText();
-        } catch (NullPointerException e) {
-            System.err.println("Input Error at jButtonSearchActionPerformed button: " + e);
-            JOptionPane.showMessageDialog(null, "Please input an ingredient to search.",
+            if (searchWord.equals("")) {
+                System.err.println("Search word is null");
+                JOptionPane.showMessageDialog(null, "Please input an ingredient to search.",
                 "Error!", JOptionPane.ERROR_MESSAGE);
-        }        
-        
-        if ( searchWord != null ) {
-            if (FileManagement.fetchIngredient(searchWord) != null) {
+            } else {
                 i = FileManagement.fetchIngredient(searchWord);
                 System.out.println("Search Button returns match: "+i.toString());
                 iName.setText(i.getName());
@@ -701,13 +701,27 @@ public class MainWindow extends javax.swing.JFrame {
                 iSodium.setText(String.valueOf(i.getSodium()));
                 iCarbs.setText(String.valueOf(i.getCarbohydrates()));
                 iFiber.setText(String.valueOf(i.getFiber()));
-                iProtein.setText(String.valueOf(i.getProtein()));
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingredient not found.");
-            }            
-        } else {
-            JOptionPane.showMessageDialog(null, "Error");
-        }
+                iProtein.setText(String.valueOf(i.getProtein()));                
+            }
+        } catch (NoSuchElementException e) {
+            System.err.println("jButtonSearchActionPerformed button: " + e);
+            
+        } catch (NullPointerException e) {
+            System.err.println("jButtonSearchActionPerformed button: " + e);
+            
+        }       
+        
+        
+        
+//        if ( searchWord != null ) {
+//            if (FileManagement.fetchIngredient(searchWord) != null) {
+
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Ingredient not found.");
+//            }            
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Error");
+//        }
         
         
     }//GEN-LAST:event_jButtonSearchActionPerformed

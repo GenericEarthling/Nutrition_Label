@@ -29,7 +29,7 @@ public class FileManagement {
     public FileManagement() {
     }
     
-    private static Boolean isDuplicate(String searchName) {
+    public static Boolean isDuplicate(String searchName) {
         File file = PATH.toFile();
         
         // search each line for a match        
@@ -68,12 +68,7 @@ public class FileManagement {
             System.err.println("ERROR--saveIngredient(ingredient): try-catch: " + e);
         }
 
-        // check to see if ingredient is already in file
-        if (isDuplicate(ingredient.getName())) {
-            // if no matches, save data to file
-            JOptionPane.showMessageDialog(null, "Ingredient is already in File.");
-        }
-        else {
+
             try (PrintWriter out = new PrintWriter(
                                    new BufferedWriter(
                                    new FileWriter(file, true)), true)) {
@@ -90,7 +85,7 @@ public class FileManagement {
             } catch (IOException e) {
                  System.err.println("ERROR--saveIngredient(ingredient): catch exception: " + e);
             }            
-        }
+        
     } 
     
     // retrieve Ingredient object
