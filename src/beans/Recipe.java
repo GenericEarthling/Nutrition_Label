@@ -15,7 +15,7 @@ public class Recipe {
     private int servings;
     private String notes;
     private Ingredient[] ingredient;
-    private int ingredientSize;
+    public static int ingredientSize;
 
     public Recipe() {
         name = "";

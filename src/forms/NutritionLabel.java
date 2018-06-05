@@ -4,18 +4,11 @@
 package forms;
 
 import beans.Ingredient;
-import static forms.MainWindow.ingredientList;
 import static forms.MainWindow.ingredientRunningTotals;
 import static forms.MainWindow.recipe;
-import static forms.MainWindow.table;
 import static forms.MainWindow.tableIngredientList;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import utilities.Calculate;
 import static utilities.Calculate.totalNutrientForWholeRecipe;
 
 /**
@@ -31,44 +24,43 @@ public class NutritionLabel extends javax.swing.JFrame {
     public NutritionLabel() {
         initComponents();
         
-//        // display recipe name and notes 
-//        jLabelName.setText(recipe.getName());
-//        jTextAreaNotes.setText(recipe.getNotes());        
-//        
-//        // get total ingredient nutrient values for display in label
-//        jLabelCalories.setText(String.valueOf(ingredientRunningTotals.getCalories()));
-//        jLabelFat.setText(String.valueOf(ingredientRunningTotals.getFat()));
-//        jLabelCholesterol.setText(String.valueOf(ingredientRunningTotals.getCholesterol()));
-//        jLabelSodium.setText(String.valueOf(ingredientRunningTotals.getSodium()));
-//        jLabelCarbohydrates.setText(String.valueOf(ingredientRunningTotals.getCarbohydrates()));
-//        jLabelFiber.setText(String.valueOf(ingredientRunningTotals.getFiber()));
-//        jLabelProtein.setText(String.valueOf(ingredientRunningTotals.getProtein()));                      
-//
-//        if (tableIngredientList == null) {
-//            JOptionPane.showMessageDialog(null, "Please close window and input ingredients for the recipe.",
-//                "Error!", JOptionPane.ERROR_MESSAGE);            
-//        } 
-//        
-////        ArrayList iter = new ArrayList();
-//        for (Ingredient s: tableIngredientList) {
-//            double ingredAmt = s.getIngredAmt();
-//            String measure = s.getMeasure();
-//            String name = s.getName();
-//            double servingSize = s.getServingSize();
-//            double calorieTotal = s.getCalories();
-//            double fatTotal = s.getFat();
-//            double cholTotal = s.getCholesterol();
-//            double sodiumTotal = s.getSodium();
-//            double carbTotal = s.getCarbohydrates();
-//            double fiberTotal = s.getFiber();
-//            double proteinTotal = s.getProtein();
-//            
-//            tableIngredients.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
-//            System.out.println("NutritionLabel Class:: foreach s: " + s);
-//        }
-//
-//        // arrayList display
-//        jLabelArrayList.setText(String.valueOf(tableIngredientList));
+        // display recipe name and notes 
+        jLabelName.setText(recipe.getName());
+        jTextAreaNotes.setText(recipe.getNotes());        
+        
+        // get total ingredient nutrient values for display in label
+        jLabelCalories.setText(String.valueOf(ingredientRunningTotals.getCalories()));
+        jLabelFat.setText(String.valueOf(ingredientRunningTotals.getFat()));
+        jLabelCholesterol.setText(String.valueOf(ingredientRunningTotals.getCholesterol()));
+        jLabelSodium.setText(String.valueOf(ingredientRunningTotals.getSodium()));
+        jLabelCarbohydrates.setText(String.valueOf(ingredientRunningTotals.getCarbohydrates()));
+        jLabelFiber.setText(String.valueOf(ingredientRunningTotals.getFiber()));
+        jLabelProtein.setText(String.valueOf(ingredientRunningTotals.getProtein()));                      
+
+        if (tableIngredientList == null) {
+            JOptionPane.showMessageDialog(null, "Please close window and input ingredients for the recipe.",
+                "Error!", JOptionPane.ERROR_MESSAGE);            
+        } 
+        
+//        ArrayList iter = new ArrayList();
+        for (Ingredient s: tableIngredientList) {
+            double ingredAmt = s.getIngredAmt();
+            String measure = s.getMeasure();
+            String name = s.getName();
+            double servingSize = s.getServingSize();
+            double calorieTotal = s.getCalories();
+            double fatTotal = s.getFat();
+            double cholTotal = s.getCholesterol();
+            double sodiumTotal = s.getSodium();
+            double carbTotal = s.getCarbohydrates();
+            double fiberTotal = s.getFiber();
+            double proteinTotal = s.getProtein();
+            
+            System.out.println("NutritionLabel Class:: foreach s: " + s);
+        }
+
+        // arrayList display
+        jLabelArrayList.setText(String.valueOf(tableIngredientList));
         
 
     }

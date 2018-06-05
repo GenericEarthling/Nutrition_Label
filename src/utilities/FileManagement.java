@@ -42,10 +42,11 @@ public class FileManagement {
                 StringTokenizer t = new StringTokenizer(data, DELIMITER);
                 String iName = t.nextToken();
                 if (searchName.equalsIgnoreCase(iName)) {
-                    System.out.println("IsDuplicate search name: " + searchName + "  iName: " + iName);
+                    System.out.println("IsDuplicate search name: " + searchName);
+                    data = in.readLine();
                     return true;
                 } else {
-                    data = in.readLine();
+                    return false;
                 }                
             } 
         } catch (IOException e) {
