@@ -37,22 +37,21 @@ public class FileManagement {
         try (BufferedReader in = new BufferedReader(
                                  new FileReader(file))) {
             String data = in.readLine();
-            System.out.println("isDuplicate-first line of data read: " + data);
+            System.out.println("FileManagement/isDuplicate/try");
             while (data != null) {
                 StringTokenizer t = new StringTokenizer(data, DELIMITER);
                 String iName = t.nextToken();
+                System.out.println("FileManagement/isDuplicate/try/while/ iName: " + iName + "  searchName: " + searchName);
                 if (searchName.equalsIgnoreCase(iName)) {
-                    System.out.println("IsDuplicate search name: " + searchName);
-                    data = in.readLine();
+                    System.out.println("FileManagement/isDuplicate/try/while/if Search has found iName: " + iName + "  searchName: " + searchName);
+                    searchName = "";
                     return true;
-                } else {
-                    return false;
-                }                
+                } 
+                data = in.readLine();                
             } 
         } catch (IOException e) {
-            System.err.println("ERROR-isDuplicate- catch exception: " + e);
+            System.err.println("ERROR at isDuplicate-catch exception: " + e);
         } 
-        System.out.println("isDuplicate--end of try-catch");        
         return false;
     }
     
@@ -99,7 +98,7 @@ public class FileManagement {
         try (BufferedReader in = new BufferedReader(
                                  new FileReader(file))) {
             String data = in.readLine();
-            System.out.println("Search Button-first line of data read: " + data);
+            System.out.println("File Management/fetchIngredient: " + name);
             while (data != null) {
                 StringTokenizer t = new StringTokenizer(data, DELIMITER);
                 String iName = t.nextToken();
@@ -113,7 +112,7 @@ public class FileManagement {
                     Double fiber = Double.parseDouble(t.nextToken());
                     Double protein = Double.parseDouble(t.nextToken());
                     i = new Ingredient(iName, servingSize, calories, fat, cholesterol, sodium, carbs, fiber, protein);
-                    System.out.println("Search Button-ingredient found, values are: " + i.toString());
+                    System.out.println("File Management/fetchIngredient/if statement. ");
                     return i;
                 } else {
                     data = in.readLine();
