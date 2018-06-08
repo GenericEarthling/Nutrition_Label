@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,7 +22,6 @@ import javax.swing.table.DefaultTableModel;
 import utilities.Calculate;
 import static utilities.Calculate.nutrientTotal;
 import utilities.FileManagement;
-import utilities.RecipeDisplay;
 
 /**
  *
@@ -666,10 +666,8 @@ public class MainWindow extends javax.swing.JFrame {
         // saving ingredient to an array for displaying the recipe object/NutritionLable.java
         tableRow = new Ingredient(name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal, ingredAmt, measure);
         tableIngredientList.add(tableRow);
-//        int ingredientIndex = table.getRowCount();
-//        RecipeDisplay.addIngredientToRecipe(tableRow, ingredientIndex);
         
-        // CREATE running totals ingredient object for the NutritionLabel.java
+        // CREATE running totals ingredient object for the FINAL label
         calorieRunningTotals += calorieTotal;
         fatRunningTotals += fatTotal;
         cholRunningTotals += cholTotal;

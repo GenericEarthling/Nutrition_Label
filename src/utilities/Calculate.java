@@ -3,7 +3,6 @@
  */
 package utilities;
 
-import beans.Ingredient;
 import java.text.DecimalFormat;
 
 /**
@@ -16,23 +15,26 @@ public class Calculate {
     
     // Finds the nutrient total for the ingredient that is displayed in the table
     public static double nutrientTotal(double servingSize, double nutrientValue, double ingredientAmt, String measure) {
-        // convert amount of ingredient in recipe (ingredAmt) to grams
+        // (1 and 2) convert amount of ingredient in recipe to grams
         double ingredAmtGrams = amountToGrams(ingredientAmt, measure);
         
-        // use serving size to find the percentage of each nutrient 
+        // (3) use serving size to find the percentage of each nutrient 
         // that is in the ingredient amount
         double nutrientPercentage = nutrientsPerGram(nutrientValue, servingSize);
         
-        // Find the totals for each nutrient that is in the ingredient. This will
+        // (4) Find the totals for each nutrient that is in the ingredient. This will
         // be displayed in the table. In order to get the totals, use the 
         // percentage of nutrient multiplied by the ingred amt in grams (amtInGrams)
         double nutrientTotal = totalNutrientValueInIngredient(nutrientPercentage, ingredAmtGrams);        
-        return nutrientTotal;
+        DecimalFormat df = new DecimalFormat("#.0");
+        double result = Double.parseDouble(df.format(nutrientTotal));
+        return result;
     }         
     
-    // 1)and 2)convert amount of ingredient in the recipe to grams
+    // 1) convert amount of ingredient in the recipe to grams 
+    // 2) RETURNS gramEquivalent x amount
     public static double amountToGrams(double amount, String measurementType) {
-        double gramEquivalent = 0;
+        double gramEquivalent;
         switch (measurementType) {
             case "grams": 
                 gramEquivalent = 1;
@@ -68,21 +70,27 @@ public class Calculate {
                 gramEquivalent = 1;
                 break;
         }        
-        return gramEquivalent * amount;
+        double resultD = gramEquivalent * amount;
+        DecimalFormat df = new DecimalFormat("#.0");
+        double result = Double.parseDouble(df.format(resultD));
+        return result;
     }    
     
     // 3)calculate percentage of each nutrient per gram
     // percentageOfNutrientInEachGram = NutrientGramsPerServingOnLabel / GramsPerServing
     public static double nutrientsPerGram(double nutrientValue, double servingSize) {
-        return nutrientValue / servingSize;
+        double resultD = nutrientValue / servingSize;
+        DecimalFormat df = new DecimalFormat("#.0");
+        double result = Double.parseDouble(df.format(resultD));
+        return result;
     }
     
     // 4) find the total value for each nutrient in each ingredient
     // totalNutrientValueInIngredient = percentageOfNutrientInEachGram x totalNutrientGramsInRecipe
     public static double totalNutrientValueInIngredient(double percentOfNutrient, double amtOfIngredInGrams) {        
         double resultD = percentOfNutrient * amtOfIngredInGrams;
-        String str = String.format("%.1f", resultD);
-        double result = Double.parseDouble(str);
+        DecimalFormat df = new DecimalFormat("#.0");
+        double result = Double.parseDouble(df.format(resultD));
         return result;
     }
 
@@ -92,8 +100,8 @@ public class Calculate {
         double percentOfNutrientPerGram = nutrientValue / servingSize;
         // 4c) find the total value sum for each nutrient in each ingredient
         double nutrientValueSum = percentOfNutrientPerGram * amtToGrams;
-        String str = String.format("%.1f", nutrientValueSum);
-        double result = Double.parseDouble(str);
+        DecimalFormat df = new DecimalFormat("#.0");
+        double result = Double.parseDouble(df.format(nutrientValueSum));
         return result;        
     }
     
@@ -101,16 +109,16 @@ public class Calculate {
     // needs to be formated to 1 decimal
     public static double totalNutrientForWholeRecipe(double totalNutrientForIngredient, int numberOfServings){
         double resultD = totalNutrientForIngredient / numberOfServings;
-        String str = String.format("%.1f", resultD);
-        double result = Double.parseDouble(str);
+        DecimalFormat df = new DecimalFormat("#.0");
+        double result = Double.parseDouble(df.format(resultD));
         return result;
     }
     
     // 6) Find the weight of each servig. The dish must be weighted by the user 
     public static double weightPerServing(double totalGramsOfWholeRecipe, int numberOfServings) {
         double resultD = totalGramsOfWholeRecipe / numberOfServings;
-        String str = String.format("%.1f", resultD);
-        double result = Double.parseDouble(str);
+        DecimalFormat df = new DecimalFormat("#.0");
+        double result = Double.parseDouble(df.format(resultD));
         return result;
     }
     
