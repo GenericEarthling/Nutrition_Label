@@ -6,6 +6,7 @@ package forms;
 import beans.Ingredient;
 import static forms.MainWindow.ingredientRunningTotals;
 import static forms.MainWindow.recipe;
+import static forms.MainWindow.table;
 import static forms.MainWindow.tableIngredientList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -28,21 +29,18 @@ public class NutritionLabel extends javax.swing.JFrame {
         jLabelName.setText(recipe.getName());
         jTextAreaNotes.setText(recipe.getNotes());        
         
-        // get total ingredient nutrient values for display in label
+        // get and set total ingredient nutrient values for display in label
         jLabelCalories.setText(String.valueOf(ingredientRunningTotals.getCalories()));
         jLabelFat.setText(String.valueOf(ingredientRunningTotals.getFat()));
         jLabelCholesterol.setText(String.valueOf(ingredientRunningTotals.getCholesterol()));
         jLabelSodium.setText(String.valueOf(ingredientRunningTotals.getSodium()));
         jLabelCarbohydrates.setText(String.valueOf(ingredientRunningTotals.getCarbohydrates()));
         jLabelFiber.setText(String.valueOf(ingredientRunningTotals.getFiber()));
-        jLabelProtein.setText(String.valueOf(ingredientRunningTotals.getProtein()));                      
-
-        if (tableIngredientList == null) {
-            JOptionPane.showMessageDialog(null, "Please close window and input ingredients for the recipe.",
-                "Error!", JOptionPane.ERROR_MESSAGE);            
-        } 
+        jLabelProtein.setText(String.valueOf(ingredientRunningTotals.getProtein()));   
         
-//        ArrayList iter = new ArrayList();
+        // show table
+        tableIngredients=(DefaultTableModel)jTableNutritionLabel.getModel();
+        
         for (Ingredient s: tableIngredientList) {
             double ingredAmt = s.getIngredAmt();
             String measure = s.getMeasure();
@@ -55,12 +53,9 @@ public class NutritionLabel extends javax.swing.JFrame {
             double carbTotal = s.getCarbohydrates();
             double fiberTotal = s.getFiber();
             double proteinTotal = s.getProtein();
-            
-            System.out.println("NutritionLabel Class:: foreach s: " + s);
+            tableIngredients.insertRow(tableIngredients.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
         }
 
-        // arrayList display
-        jLabelArrayList.setText(String.valueOf(tableIngredientList));
         
 
     }
@@ -107,8 +102,8 @@ public class NutritionLabel extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         jLabelName = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jLabelArrayList = new javax.swing.JLabel();
-        jLabelArrayListHeading = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableNutritionLabel = new javax.swing.JTable();
 
         javax.swing.GroupLayout jDialogNameErrorLayout = new javax.swing.GroupLayout(jDialogNameError.getContentPane());
         jDialogNameError.getContentPane().setLayout(jDialogNameErrorLayout);
@@ -133,8 +128,8 @@ public class NutritionLabel extends javax.swing.JFrame {
         jTextAreaNotes.setBorder(null);
         jScrollPane3.setViewportView(jTextAreaNotes);
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel20.setFont(new java.awt.Font("Segoe UI Light", 1, 24)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 102, 0));
         jLabel20.setText("Recipe Notes");
 
         jPanelNutritionLabel.setBackground(new java.awt.Color(255, 255, 255));
@@ -345,21 +340,49 @@ public class NutritionLabel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabelName.setFont(new java.awt.Font("Segoe UI Light", 0, 36)); // NOI18N
-        jLabelName.setForeground(new java.awt.Color(153, 0, 0));
+        jLabelName.setFont(new java.awt.Font("Segoe UI Semibold", 1, 36)); // NOI18N
+        jLabelName.setForeground(new java.awt.Color(255, 102, 0));
         jLabelName.setText("Recipe Name");
 
-        jLabel21.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel21.setFont(new java.awt.Font("Segoe UI Light", 1, 24)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 102, 0));
         jLabel21.setText("Ingredient List");
 
-        jLabelArrayList.setFont(new java.awt.Font("Segoe UI Light", 0, 16)); // NOI18N
-        jLabelArrayList.setForeground(new java.awt.Color(72, 72, 72));
-        jLabelArrayList.setText("array list");
+        jTableNutritionLabel.setFont(new java.awt.Font("Segoe UI Semilight", 0, 13)); // NOI18N
+        jTableNutritionLabel.setForeground(new java.awt.Color(51, 51, 51));
+        jTableNutritionLabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jLabelArrayListHeading.setFont(new java.awt.Font("Segoe UI Light", 1, 16)); // NOI18N
-        jLabelArrayListHeading.setForeground(new java.awt.Color(72, 72, 72));
-        jLabelArrayListHeading.setText("Amount        Unit  Ingredient          Serve Size     Cal.      Fat    Chol.   Sodium    Carb.    Fiber  Protein");
+            },
+            new String [] {
+                "Amount", "Unit", "Ingredient", "Serving Size", "Calories", "Fat", "Chol.", "Sodium", "Carb", "Fiber", "Protein"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableNutritionLabel.setFocusable(false);
+        jTableNutritionLabel.setGridColor(new java.awt.Color(153, 153, 153));
+        jTableNutritionLabel.setIntercellSpacing(new java.awt.Dimension(1, 3));
+        jTableNutritionLabel.setRequestFocusEnabled(false);
+        jTableNutritionLabel.setRowHeight(20);
+        jTableNutritionLabel.setRowSelectionAllowed(false);
+        jTableNutritionLabel.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        jTableNutritionLabel.setShowHorizontalLines(false);
+        jTableNutritionLabel.setShowVerticalLines(false);
+        jScrollPane1.setViewportView(jTableNutritionLabel);
 
         javax.swing.GroupLayout jPanelMainBkgdLayout = new javax.swing.GroupLayout(jPanelMainBkgd);
         jPanelMainBkgd.setLayout(jPanelMainBkgdLayout);
@@ -368,22 +391,21 @@ public class NutritionLabel extends javax.swing.JFrame {
             .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
                 .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
-                        .addGap(234, 234, 234)
+                        .addGap(109, 109, 109)
                         .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
+                        .addGap(234, 234, 234)
+                        .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
                                 .addComponent(jPanelNutritionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(32, 32, 32)
                                 .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel20)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanelMainBkgdLayout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addGroup(jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabelArrayList)
-                            .addComponent(jLabelArrayListHeading))))
-                .addGap(222, 222, 222))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
         jPanelMainBkgdLayout.setVerticalGroup(
             jPanelMainBkgdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,34 +419,22 @@ public class NutritionLabel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3))
                     .addComponent(jPanelNutritionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel21)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelArrayListHeading)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelArrayList)
-                .addGap(158, 158, 158))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(308, 308, 308))
         );
 
-        getContentPane().add(jPanelMainBkgd, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 860));
+        getContentPane().add(jPanelMainBkgd, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 890));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNumberServingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNumberServingsActionPerformed
         
+        // devide number of servings for each nutrition value to get per-serving values
         int servings = Integer.parseInt(jtfieldNumberServings.getText());
-        double weight = Double.parseDouble(jtfieldWeight.getText());
-        double singleServingWeight = 0.0;
-        // get total nutrient values for display in label
-
-        if ( (weight > 0) && (servings > 0) ) {
-            singleServingWeight = ( weight / servings );
-            jLabelSingleServingWeight.setText(String.valueOf(singleServingWeight));
-        } else {
-            JOptionPane.showMessageDialog(null, "Please close window and input ingredients into the recipe.",
-                "Error!", JOptionPane.ERROR_MESSAGE);
-        }
 
         // get running totals
         double calories = ingredientRunningTotals.getCalories();
@@ -482,8 +492,6 @@ public class NutritionLabel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelArrayList;
-    private javax.swing.JLabel jLabelArrayListHeading;
     private javax.swing.JLabel jLabelCalories;
     private javax.swing.JLabel jLabelCarbohydrates;
     private javax.swing.JLabel jLabelCholesterol;
@@ -495,10 +503,12 @@ public class NutritionLabel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSodium;
     private javax.swing.JPanel jPanelMainBkgd;
     private javax.swing.JPanel jPanelNutritionLabel;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable jTableNutritionLabel;
     private javax.swing.JTextArea jTextAreaNotes;
     private javax.swing.JTextField jtfieldNumberServings;
     private javax.swing.JTextField jtfieldWeight;

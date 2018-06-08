@@ -5,6 +5,7 @@ package forms;
 
 import beans.Ingredient;
 import beans.Recipe;
+import static forms.NutritionLabel.tableIngredients;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -147,7 +148,7 @@ public class MainWindow extends javax.swing.JFrame {
         setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         setResizable(false);
 
-        jPanelHeader.setBackground(new java.awt.Color(0, 0, 0));
+        jPanelHeader.setBackground(new java.awt.Color(255, 102, 0));
 
         jLabelHeaderTitle.setFont(new java.awt.Font("Segoe UI Light", 0, 48)); // NOI18N
         jLabelHeaderTitle.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,7 +182,15 @@ public class MainWindow extends javax.swing.JFrame {
             new String [] {
                 "Amount", "Unit", "Ingredient", "Serving Size", "Calories", "Fat", "Cholesterol", "Sodium", "Carbohydrates", "Fiber", "Protein"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable.setToolTipText("");
         jTable.setGridColor(new java.awt.Color(153, 153, 153));
         jTable.setRowHeight(20);
@@ -233,11 +242,11 @@ public class MainWindow extends javax.swing.JFrame {
         jTextFieldSearch.setForeground(new java.awt.Color(51, 51, 51));
         jTextFieldSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 7));
 
-        jLabelIngredList.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabelIngredList.setFont(new java.awt.Font("Segoe UI Light", 1, 24)); // NOI18N
         jLabelIngredList.setForeground(new java.awt.Color(255, 102, 0));
         jLabelIngredList.setText("Ingredient List");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Light", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 102, 0));
         jLabel5.setText("Recipe Name");
 
@@ -246,7 +255,7 @@ public class MainWindow extends javax.swing.JFrame {
         jtfRecipeName.setForeground(new java.awt.Color(51, 51, 51));
         jtfRecipeName.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Light", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 102, 0));
         jLabel2.setText("Notes");
 
@@ -475,9 +484,6 @@ public class MainWindow extends javax.swing.JFrame {
             jPanelIngredientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelIngredientsLayout.createSequentialGroup()
                 .addGroup(jPanelIngredientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelIngredientsLayout.createSequentialGroup()
-                        .addGap(433, 433, 433)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelIngredientsLayout.createSequentialGroup()
                         .addGroup(jPanelIngredientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelIngredientsLayout.createSequentialGroup()
@@ -516,7 +522,11 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(jPanelNutritionFacts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelIngredientsLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelIngredientsLayout.createSequentialGroup()
+                        .addGap(433, 433, 433)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanelIngredientsLayout.setVerticalGroup(
@@ -652,11 +662,11 @@ public class MainWindow extends javax.swing.JFrame {
         double fiberTotal = nutrientTotal(servingSize, fiber, ingredAmt, measure);
         double proteinTotal = nutrientTotal(servingSize, protein, ingredAmt, measure);
         table.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
-        
+//        tableIngredients.insertRow(tableIngredients.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
+
+        // saving ingredient to an array for displaying the recipe object/NutritionLable.java
         tableRow = new Ingredient(name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal, ingredAmt, measure);
         tableIngredientList.add(tableRow);
-
-        // saving ingredient to an array for the recipe object/NutritionLable.java
         int ingredientIndex = table.getRowCount();
         RecipeDisplay.addIngredientToRecipe(tableRow, ingredientIndex);
         
@@ -696,7 +706,7 @@ public class MainWindow extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Please input an ingredient to search.",
                         "Error!", JOptionPane.ERROR_MESSAGE); 
             }
-            // if search word is in database, get values. Set search field to ""
+            // if search word is in database, display values in label. Set search field to ""
             if (FileManagement.isDuplicate(searchWord)) {
                 i = FileManagement.fetchIngredient(searchWord);
                 iName.setText(i.getName());
