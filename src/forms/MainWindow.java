@@ -5,7 +5,6 @@ package forms;
 
 import beans.Ingredient;
 import beans.Recipe;
-import static forms.NutritionLabel.tableIngredients;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,9 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -36,9 +33,8 @@ public class MainWindow extends javax.swing.JFrame {
     static Recipe recipe;
     public String rNotes;
     public String rName;
-    public int rServings;
-    // totals for final display label in NutritionLabel
-    static Ingredient ingredientRunningTotals;
+    public int rServings;    
+    static Ingredient ingredientRunningTotals;   // totals for final display label in NutritionLabel
     Ingredient selectedIngredient;
     String selectedMeasurement;
     double calorieRunningTotals;
@@ -48,10 +44,9 @@ public class MainWindow extends javax.swing.JFrame {
     double carbRunningTotals;
     double fiberRunningTotals;
     double proteinRunningTotals;
-    static List<Ingredient> tableIngredientList = new ArrayList<>();
-    static Ingredient ingredientList;
+    static List<Ingredient> tableIngredientList = new ArrayList<>();   // holds data for table #2
     static Ingredient tableRow;
-    private Statement statement;
+    private Statement statement;                // for database connection
     
     /**
      * Creates new form MainWindow
@@ -62,7 +57,7 @@ public class MainWindow extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         
         try {
-            initializeDB();       // connect to database
+            initializeDB();                     // connect to database
         } catch (SQLException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -467,6 +462,11 @@ public class MainWindow extends javax.swing.JFrame {
         jBtnResetAll.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         jBtnResetAll.setForeground(new java.awt.Color(255, 255, 255));
         jBtnResetAll.setText("Reset All");
+        jBtnResetAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnResetAllActionPerformed(evt);
+            }
+        });
 
         jBtnGetLabel.setBackground(new java.awt.Color(255, 102, 0));
         jBtnGetLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
@@ -585,10 +585,10 @@ public class MainWindow extends javax.swing.JFrame {
 
         // get user input recipe values
         try {
-                rName = jtfRecipeName.getText();
-                rNotes = jtaNotes.getText();
+            rName = jtfRecipeName.getText();
+            rNotes = jtaNotes.getText();
         } catch (NullPointerException e) {
-            System.err.println("Input Error at Get-Label Action Performed button: " + e);
+            System.err.println("Mainwindow/jBtnGetLabelActionPerformed button: " + e);
         }        
         
         // save recipe values
@@ -650,7 +650,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         } catch (IOException ex) {
             System.err.println("ERROR at Add Ingredient: " + ex);
-//            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // Calculate the nutrient's total values and display them in the table
@@ -662,13 +662,12 @@ public class MainWindow extends javax.swing.JFrame {
         double fiberTotal = nutrientTotal(servingSize, fiber, ingredAmt, measure);
         double proteinTotal = nutrientTotal(servingSize, protein, ingredAmt, measure);
         table.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
-//        tableIngredients.insertRow(tableIngredients.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
-
+        
         // saving ingredient to an array for displaying the recipe object/NutritionLable.java
         tableRow = new Ingredient(name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal, ingredAmt, measure);
         tableIngredientList.add(tableRow);
-        int ingredientIndex = table.getRowCount();
-        RecipeDisplay.addIngredientToRecipe(tableRow, ingredientIndex);
+//        int ingredientIndex = table.getRowCount();
+//        RecipeDisplay.addIngredientToRecipe(tableRow, ingredientIndex);
         
         // CREATE running totals ingredient object for the NutritionLabel.java
         calorieRunningTotals += calorieTotal;
@@ -698,7 +697,7 @@ public class MainWindow extends javax.swing.JFrame {
    // Search Button 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
         String searchWord;
-        Ingredient i = new Ingredient();
+        Ingredient i;
         try {
             searchWord = jTextFieldSearch.getText();
             if (searchWord.equals("")) {
@@ -734,7 +733,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void jButtonDeleteIngredientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteIngredientActionPerformed
         // Use jTableMouseClicked event to get the selected Ingredient from table
         table.removeRow(jTable.getSelectedRow());
-
+             
         // SUBTRACT and UPDATE running totals to ingredient object for the NutritionLabel.java
         calorieRunningTotals -= selectedIngredient.getCalories();
         fatRunningTotals -= selectedIngredient.getFat();
@@ -806,8 +805,57 @@ public class MainWindow extends javax.swing.JFrame {
         ingredientRunningTotals = new Ingredient(calorieRunningTotals, fatRunningTotals, cholRunningTotals, sodiumRunningTotals, carbRunningTotals, fiberRunningTotals, proteinRunningTotals);
     }//GEN-LAST:event_jBtnEditIngredActionPerformed
 
-    // test user input to see if valid type -- website for testing input:
-    // http://moriel.smarterthanthat.com/tips/java/java-user-input-validation/
+    private void jBtnResetAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnResetAllActionPerformed
+        // set all values to null or zero
+//        table = null;
+        recipe =  null;
+        rNotes = "";
+        rName = "";
+        rServings = 0;
+        selectedIngredient = null;
+        selectedMeasurement = "";
+        tableIngredientList = null;
+//        ingredientList = null;
+//        tableRow = null;
+        statement = null;                       
+        
+        // Running totals set to null
+        calorieRunningTotals = 0;
+        fatRunningTotals = 0;
+        cholRunningTotals = 0;
+        sodiumRunningTotals = 0;
+        carbRunningTotals = 0;
+        fiberRunningTotals = 0;
+        proteinRunningTotals = 0;
+        ingredientRunningTotals = null;
+        
+        // clear the table
+//        int rowCount = table.getRowCount();
+//        for (int i = 1; i < rowCount; i++) {
+//            table.removeRow(i);
+//        }
+        table.setRowCount(0);
+//        tableRow.setRowCount(0);
+
+// clear recipe text input boxes
+        jtfRecipeName.setText("");
+        jtaNotes.setText("");
+               
+        // clear data from Nutrition label
+        iName.setText("");
+        iServingSize.setText(String.valueOf(""));
+        iAmtInRecipe.setText(String.valueOf(""));
+        iCalories.setText(String.valueOf(""));
+        iFat.setText(String.valueOf(""));
+        iSodium.setText(String.valueOf(""));
+        iCholesterol.setText(String.valueOf(""));
+        iCarbs.setText(String.valueOf(""));
+        iFiber.setText(String.valueOf(""));
+        iProtein.setText(String.valueOf(""));
+        iMeasurement.setSelectedIndex(0);
+    }//GEN-LAST:event_jBtnResetAllActionPerformed
+
+    // test user input to see if valid type
     public double doubleTest(String userInput) {
         try {
             if (userInput != null) {
@@ -887,10 +935,8 @@ public class MainWindow extends javax.swing.JFrame {
     public static void main(String args[]) {
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainWindow().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainWindow().setVisible(true);
         });      
         
 

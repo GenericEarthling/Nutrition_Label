@@ -37,20 +37,17 @@ public class FileManagement {
         try (BufferedReader in = new BufferedReader(
                                  new FileReader(file))) {
             String data = in.readLine();
-            System.out.println("FileManagement/isDuplicate/try");
             while (data != null) {
                 StringTokenizer t = new StringTokenizer(data, DELIMITER);
                 String iName = t.nextToken();
-                System.out.println("FileManagement/isDuplicate/try/while/ iName: " + iName + "  searchName: " + searchName);
                 if (searchName.equalsIgnoreCase(iName)) {
-                    System.out.println("FileManagement/isDuplicate/try/while/if Search has found iName: " + iName + "  searchName: " + searchName);
                     searchName = "";
                     return true;
                 } 
                 data = in.readLine();                
             } 
         } catch (IOException e) {
-            System.err.println("ERROR at isDuplicate-catch exception: " + e);
+            System.err.println("Error: FileManagement/isDuplicate/try-catch: " + e);
         } 
         return false;
     }
@@ -64,26 +61,25 @@ public class FileManagement {
                 Files.createFile(PATH);
             }
         } catch (IOException e)  {
-            System.err.println("ERROR--saveIngredient(ingredient): try-catch: " + e);
+            System.err.println("Error: FileManagement/saveIngredient/try-catch #1: " + e);
         }
 
-
-            try (PrintWriter out = new PrintWriter(
-                                   new BufferedWriter(
-                                   new FileWriter(file, true)), true)) {
-                // save each column of data in this specific order
-                out.print(ingredient.getName() + DELIMITER);
-                out.print(ingredient.getServingSize() + DELIMITER);
-                out.print(ingredient.getCalories() + DELIMITER);
-                out.print(ingredient.getFat()+ DELIMITER);
-                out.print(ingredient.getCholesterol() + DELIMITER);
-                out.print(ingredient.getSodium() + DELIMITER);
-                out.print(ingredient.getCarbohydrates() + DELIMITER);
-                out.print(ingredient.getFiber() + DELIMITER);
-                out.print(ingredient.getProtein() + NEW_LINE);
-            } catch (IOException e) {
-                 System.err.println("ERROR--saveIngredient(ingredient): catch exception: " + e);
-            }            
+        try (PrintWriter out = new PrintWriter(
+                               new BufferedWriter(
+                               new FileWriter(file, true)), true)) {
+            // save each column of data in this specific order
+            out.print(ingredient.getName() + DELIMITER);
+            out.print(ingredient.getServingSize() + DELIMITER);
+            out.print(ingredient.getCalories() + DELIMITER);
+            out.print(ingredient.getFat()+ DELIMITER);
+            out.print(ingredient.getCholesterol() + DELIMITER);
+            out.print(ingredient.getSodium() + DELIMITER);
+            out.print(ingredient.getCarbohydrates() + DELIMITER);
+            out.print(ingredient.getFiber() + DELIMITER);
+            out.print(ingredient.getProtein() + NEW_LINE);
+        } catch (IOException e) {
+             System.err.println("Error: FileManagement/saveIngredient/try-catch #2: " + e);
+        }            
         
     } 
     
@@ -98,7 +94,6 @@ public class FileManagement {
         try (BufferedReader in = new BufferedReader(
                                  new FileReader(file))) {
             String data = in.readLine();
-            System.out.println("File Management/fetchIngredient: " + name);
             while (data != null) {
                 StringTokenizer t = new StringTokenizer(data, DELIMITER);
                 String iName = t.nextToken();
@@ -112,16 +107,14 @@ public class FileManagement {
                     Double fiber = Double.parseDouble(t.nextToken());
                     Double protein = Double.parseDouble(t.nextToken());
                     i = new Ingredient(iName, servingSize, calories, fat, cholesterol, sodium, carbs, fiber, protein);
-                    System.out.println("File Management/fetchIngredient/if statement. ");
                     return i;
                 } else {
                     data = in.readLine();
                 }                
             } 
         } catch (IOException e) {
-            System.err.println("ERROR-fetchIngredient(ingredient): catch exception: " + e);
+            System.err.println("Error: FileManagement/fetchIngredient/try-catch: " + e);
         } 
-            System.out.println("Search Button-end of try-catch");        
         return i;
     }
 

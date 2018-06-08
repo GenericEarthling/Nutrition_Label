@@ -6,9 +6,7 @@ package forms;
 import beans.Ingredient;
 import static forms.MainWindow.ingredientRunningTotals;
 import static forms.MainWindow.recipe;
-import static forms.MainWindow.table;
 import static forms.MainWindow.tableIngredientList;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static utilities.Calculate.totalNutrientForWholeRecipe;
 
