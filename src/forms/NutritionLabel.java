@@ -39,7 +39,7 @@ public class NutritionLabel extends javax.swing.JFrame {
         // show table
         tableIngredients=(DefaultTableModel)jTableNutritionLabel.getModel();
         
-        for (Ingredient s: tableIngredientList) {
+        tableIngredientList.forEach((s) -> {
             double ingredAmt = s.getIngredAmt();
             String measure = s.getMeasure();
             String name = s.getName();
@@ -52,7 +52,7 @@ public class NutritionLabel extends javax.swing.JFrame {
             double fiberTotal = s.getFiber();
             double proteinTotal = s.getProtein();
             tableIngredients.insertRow(tableIngredients.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
-        }
+        });
 
         
 
@@ -468,6 +468,7 @@ public class NutritionLabel extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new NutritionLabel().setVisible(true);
             }

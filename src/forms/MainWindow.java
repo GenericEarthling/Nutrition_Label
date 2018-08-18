@@ -5,6 +5,7 @@ package forms;
 
 import beans.Ingredient;
 import beans.Recipe;
+import static forms.NutritionLabel.tableIngredients;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -602,8 +603,6 @@ public class MainWindow extends javax.swing.JFrame {
         nl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jBtnGetLabelActionPerformed
 
-    
-    
    // Quit Button
     private void jBtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCloseActionPerformed
         System.exit(0);
@@ -662,7 +661,7 @@ public class MainWindow extends javax.swing.JFrame {
         double fiberTotal = nutrientTotal(servingSize, fiber, ingredAmt, measure);
         double proteinTotal = nutrientTotal(servingSize, protein, ingredAmt, measure);
         table.insertRow(table.getRowCount(), new Object[]{ingredAmt, measure, name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal});
-        
+
         // saving ingredient to an array for displaying the recipe object/NutritionLable.java
         tableRow = new Ingredient(name, servingSize, calorieTotal, fatTotal, cholTotal, sodiumTotal, carbTotal, fiberTotal, proteinTotal, ingredAmt, measure);
         tableIngredientList.add(tableRow);
@@ -770,7 +769,8 @@ public class MainWindow extends javax.swing.JFrame {
         // CREATE ingredient object with the ingredient selected in the table
         selectedIngredient = new Ingredient(name, d_servingSize, d_calories, d_fat, d_cholesterol, d_sodium, d_carbs, d_fiber, d_protein, d_amount, selectedMeasurement);
     }//GEN-LAST:event_jTableMouseClicked
-
+    
+    // delete the ingredient from the table, populate values in label for revision
     private void jBtnEditIngredActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditIngredActionPerformed
         // move the selected Ingredient from table to the Nutrition Label
         // get values from Ingredient.txt file, NOT the calculated values from table
