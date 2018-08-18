@@ -1,14 +1,7 @@
-/*
- * Calculates nutrient values
- */
 package utilities;
 
 import java.text.DecimalFormat;
 
-/**
- *
- * @author Tender
- */
 public class Calculate {
     // default constructor
     public Calculate(){}
