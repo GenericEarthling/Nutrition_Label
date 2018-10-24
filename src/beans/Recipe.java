@@ -5,11 +5,14 @@
  */
 package beans;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  *
  * @author Tender
  */
-public class Recipe {
+public class Recipe implements Cloneable {
     
     private String name;
     private int servings;
@@ -74,6 +77,41 @@ public class Recipe {
         ingredient[ingredientSize] = ingred;
         ingredientSize++;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + Objects.hashCode(this.name);
+        hash = 43 * hash + this.servings;
+        hash = 43 * hash + Objects.hashCode(this.notes);
+        hash = 43 * hash + Arrays.deepHashCode(this.ingredient);
+        return hash;
+    }
+
+    // Do not check if it equals servings and/or notes when comparing
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Recipe other = (Recipe) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.ingredient, other.ingredient)) {
+            return false;
+        }
+        return true;
+    }
+
+
+
     
     @Override
     public String toString() {

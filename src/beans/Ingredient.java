@@ -5,11 +5,13 @@
  */
 package beans;
 
+import java.util.Objects;
+
 /**
  *
  * @author Tender
  */
-public class Ingredient {
+public class Ingredient implements Cloneable {
     
     private String name;
     private double servingSize;
@@ -165,6 +167,66 @@ public class Ingredient {
         this.measure = measure;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 31 * hash + Objects.hashCode(this.name);
+        hash = 31 * hash + (int) (Double.doubleToLongBits(this.servingSize) ^ (Double.doubleToLongBits(this.servingSize) >>> 32));
+        hash = 31 * hash + (int) (Double.doubleToLongBits(this.calories) ^ (Double.doubleToLongBits(this.calories) >>> 32));
+        hash = 31 * hash + (int) (Double.doubleToLongBits(this.fat) ^ (Double.doubleToLongBits(this.fat) >>> 32));
+        hash = 31 * hash + (int) (Double.doubleToLongBits(this.cholesterol) ^ (Double.doubleToLongBits(this.cholesterol) >>> 32));
+        hash = 31 * hash + (int) (Double.doubleToLongBits(this.sodium) ^ (Double.doubleToLongBits(this.sodium) >>> 32));
+        hash = 31 * hash + (int) (Double.doubleToLongBits(this.carbohydrates) ^ (Double.doubleToLongBits(this.carbohydrates) >>> 32));
+        hash = 31 * hash + (int) (Double.doubleToLongBits(this.fiber) ^ (Double.doubleToLongBits(this.fiber) >>> 32));
+        hash = 31 * hash + (int) (Double.doubleToLongBits(this.protein) ^ (Double.doubleToLongBits(this.protein) >>> 32));
+        return hash;
+    }
+
+    // Do not check if it equals ingredient amount and/or measurement type when comparing
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ingredient other = (Ingredient) obj;
+        if (Double.doubleToLongBits(this.servingSize) != Double.doubleToLongBits(other.servingSize)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.calories) != Double.doubleToLongBits(other.calories)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.fat) != Double.doubleToLongBits(other.fat)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.cholesterol) != Double.doubleToLongBits(other.cholesterol)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.sodium) != Double.doubleToLongBits(other.sodium)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.carbohydrates) != Double.doubleToLongBits(other.carbohydrates)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.fiber) != Double.doubleToLongBits(other.fiber)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.protein) != Double.doubleToLongBits(other.protein)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
     @Override
     public String toString() {
         String ingredient;
